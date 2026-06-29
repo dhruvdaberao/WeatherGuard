@@ -6,7 +6,9 @@ import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
   constructor(private configService: ConfigService) {
-    const backendUrl = configService.get<string>('BACKEND_URL') || 'http://localhost:3000';
+    const backendUrl = configService.get<string>('BACKEND_URL') || 
+      (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'));
     super({
       clientID: configService.get<string>('GITHUB_CLIENT_ID') || 'placeholder_client_id',
       clientSecret: configService.get<string>('GITHUB_CLIENT_SECRET') || 'placeholder_secret',

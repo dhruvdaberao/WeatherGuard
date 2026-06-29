@@ -7,36 +7,53 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 
-const server = express();
+let appPromise: Promise<express.Express>;
 
-async function bootstrap() {
-  const app = await NestFactory.create(
-    AppModule,
-    new ExpressAdapter(server)
-  );
+async function getApp(): Promise<express.Express> {
+  if (!appPromise) {
+    appPromise = (async () => {
+      const server = express();
+      const app = await NestFactory.create(
+        AppModule,
+        new ExpressAdapter(server),
+      );
 
-  app.setGlobalPrefix('api');
+      app.setGlobalPrefix('api');
 
-  app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-    credentials: true,
-  });
+      app.enableCors({
+        origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+        credentials: true,
+      });
 
-  app.use(helmet());
-  app.use(compression());
-  app.use(cookieParser());
+      app.use(helmet());
+      app.use(compression());
+      app.use(cookieParser());
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-    }),
-  );
+      app.useGlobalPipes(
+        new ValidationPipe({
+          whitelist: true,
+          forbidNonWhitelisted: true,
+          transform: true,
+        }),
+      );
 
-  await app.init();
+      await app.init();
+      return server;
+    })();
+  }
+  return appPromise;
 }
 
-bootstrap();
+if (!process.env.VERCEL) {
+  getApp().then(server => {
+    const port = process.env.PORT || 3000;
+    server.listen(port, () => {
+      console.log(`Server listening on port ${port}`);
+    });
+  });
+}
 
-export default server;
+export default async (req: express.Request, res: express.Response) => {
+  const server = await getApp();
+  return server(req, res);
+};
