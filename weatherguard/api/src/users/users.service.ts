@@ -23,7 +23,7 @@ export class UsersService {
   }
 
   async findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+    return this.userModel.find().sort({ createdAt: -1 }).exec();
   }
 
   async count(filter: any = {}): Promise<number> {
@@ -54,7 +54,7 @@ export class UsersService {
     
     const skip = (page - 1) * limit;
     const [data, total] = await Promise.all([
-      this.userModel.find(query).skip(skip).limit(limit).exec(),
+      this.userModel.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit).exec(),
       this.userModel.countDocuments(query).exec()
     ]);
     
