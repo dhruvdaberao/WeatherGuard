@@ -132,6 +132,9 @@ export function LoginPage() {
               <div className="mb-6">
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   If you are an administrator, please enter your secure password to continue.
+                  <span className="block mt-2.5 p-2 bg-[#229ED9]/10 border border-[#229ED9]/20 rounded-lg text-[#229ED9] font-mono text-xs font-semibold text-center select-all">
+                    Demo Admin Password: admin@123
+                  </span>
                 </p>
               </div>
               <form onSubmit={handleAdminLogin} className="space-y-6">

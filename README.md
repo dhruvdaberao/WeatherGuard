@@ -32,6 +32,7 @@ PICT Pune
 ## 🚀 Live Demo & Video Walkthrough
 
 - **Live Production App**: [https://weather-guard-two.vercel.app](https://weather-guard-two.vercel.app)
+- **Admin Console Password**: `admin@123` *(Click "Admin Login" on the home page)*
 - **YouTube Demo Video**: [Watch Full Walkthrough on YouTube (https://youtu.be/zWwknFAIqu4)](https://youtu.be/zWwknFAIqu4)
 - **GitHub Repository**: [https://github.com/dhruvdaberao/WeatherGuard](https://github.com/dhruvdaberao/WeatherGuard)
 
