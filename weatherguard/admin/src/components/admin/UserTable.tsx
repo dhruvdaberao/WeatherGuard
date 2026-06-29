@@ -2,7 +2,7 @@ import type { User } from '../../types/auth';
 import { Status } from '../../types/auth';
 import { StatusBadge } from './StatusBadge';
 import { Button } from '../ui/Button';
-import { Check, X, SearchX } from 'lucide-react';
+import { Check, X, SearchX, CheckCircle2, XCircle } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../../services/api';
 import toast from 'react-hot-toast';
@@ -89,11 +89,13 @@ export function UserTable({ users, isLoading }: UserTableProps) {
                 </td>
                 <td className="px-6 py-4 text-center">
                   {user.telegramConnected ? (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20 whitespace-nowrap shadow-sm">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20 whitespace-nowrap shadow-sm">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
                       Connected
                     </span>
                   ) : (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-slate-500/10 text-slate-600 dark:text-slate-400 border border-slate-500/20 whitespace-nowrap shadow-sm">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-500/10 text-slate-600 dark:text-slate-400 border border-slate-500/20 whitespace-nowrap shadow-sm">
+                      <XCircle className="w-3.5 h-3.5" />
                       Not Connected
                     </span>
                   )}

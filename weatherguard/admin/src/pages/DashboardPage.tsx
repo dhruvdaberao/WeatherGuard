@@ -8,7 +8,7 @@ import { Status } from '../types/auth';
 import { CitySelector } from '../components/preferences/CitySelector';
 import { WeatherPreferenceSelector, WeatherPreference } from '../components/preferences/WeatherPreferenceSelector';
 import { api } from '../services/api';
-import { MapPin, Save, Edit2, X, Lock } from 'lucide-react';
+import { MapPin, Save, Edit2, X, Lock, CheckCircle2, XCircle } from 'lucide-react';
 import { TelegramLogo } from '../components/shared/TelegramLogo';
 import { LoadingState } from '../components/shared/LoadingState';
 import toast from 'react-hot-toast';
@@ -213,11 +213,11 @@ export function DashboardPage() {
                 
                 {user.telegramConnected ? (
                   <div className="space-y-2">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                      ✅ Connected
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-sm font-semibold bg-green-500/10 text-green-700 dark:text-green-400 border border-green-500/20 shadow-sm">
+                      <CheckCircle2 className="w-4 h-4 text-green-600 dark:text-green-400 shrink-0" strokeWidth={2.5} /> Connected
                     </span>
                     {user.telegramConnectedAt && (
-                      <p className="text-xs text-muted-foreground mt-2">
+                      <p className="text-xs text-muted-foreground mt-2 font-medium">
                         Connected At: {new Date(user.telegramConnectedAt).toLocaleDateString()}
                       </p>
                     )}
@@ -225,8 +225,8 @@ export function DashboardPage() {
                 ) : (
                   <>
                     <div className="mb-3">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-400">
-                        ❌ Not Connected
+                      <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-sm font-semibold bg-slate-500/10 text-slate-700 dark:text-slate-400 border border-slate-500/20 shadow-sm">
+                        <XCircle className="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0" strokeWidth={2.5} /> Not Connected
                       </span>
                     </div>
                     <p className="text-sm text-muted-foreground leading-relaxed">
