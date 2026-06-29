@@ -19,10 +19,11 @@
       "dest": "api/src/main.ts"
     },
     {
-      "handle": "filesystem"
+      "src": "/assets/(.*)",
+      "dest": "/admin/assets/$1"
     },
     {
-      "src": "/(.*)",
+      "src": "/(favicon\\.svg|manifest\\.json|.*\\.png|.*\\.avif)",
       "dest": "/admin/$1"
     },
     {
@@ -36,7 +37,7 @@
   "crons": [
     {
       "path": "/api/cron/weather",
-      "schedule": "0 * * * *"
+      "schedule": "0 0 * * *"
     }
   ]
 }
