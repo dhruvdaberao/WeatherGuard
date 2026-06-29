@@ -4,6 +4,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { UsersService } from '../../users/users.service';
+import { Role } from '../../users/enums/role.enum';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -23,6 +24,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
+    if (payload.sub === 'admin_id' && payload.role === Role.ADMIN) {
+      return { id: 'admin_id', email: payload.email, role: Role.ADMIN };
+    }
+
     const user = await this.usersService.findOne(payload.sub);
     if (!user) {
       throw new UnauthorizedException();

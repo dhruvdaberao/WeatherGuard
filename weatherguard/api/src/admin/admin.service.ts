@@ -17,8 +17,8 @@ export class AdminService {
     return { totalUsers, pendingUsers, approvedUsers, rejectedUsers };
   }
 
-  async getUsers(status?: Status, search?: string, limit: number = 10, page: number = 1) {
-    return this.usersService.findWithFilters(status, search, limit, page);
+  async getUsers(status?: Status, search?: string, telegram?: string, limit: number = 10, page: number = 1) {
+    return this.usersService.findWithFilters(status, search, telegram, limit, page);
   }
 
   async approveUser(id: string) {

@@ -18,34 +18,40 @@ export class AuthService {
     const user = existingUsers.find(u => u.providerId === profile.providerId || u.email === profile.email);
     
     if (user) {
-      if (!user.providerId) {
-         // Link account if email matches but provider isn't set
+      if (user.role === Role.ADMIN) {
+        // Strip legacy admin privileges from OAuth users
+        const userId = (user as any)._id ? (user as any)._id.toString() : (user as any).id;
+        await this.usersService.updateRole(userId, Role.USER);
+        user.role = Role.USER;
       }
       return user;
     }
 
-    // Determine Role
-    let assignedRole = Role.USER;
-    const superAdminEmail = this.configService.get<string>('SUPER_ADMIN_EMAIL');
-    
-    if (superAdminEmail && profile.email === superAdminEmail) {
-      assignedRole = Role.ADMIN;
-    } else if (existingUsers.length === 0) {
-      assignedRole = Role.ADMIN; // First user fallback
-    }
-
-    // Auto-create user
+    // All OAuth users default to USER and PENDING
     const newUser = await this.usersService.create({
       name: profile.name,
       email: profile.email,
       provider: profile.provider,
       providerId: profile.providerId,
       avatar: profile.avatar,
-      role: assignedRole,
-      status: assignedRole === Role.ADMIN ? Status.APPROVED : Status.PENDING,
+      role: Role.USER,
+      status: Status.PENDING,
     });
     
     return newUser;
+  }
+
+  adminLogin(password: string) {
+    const adminPassword = this.configService.get<string>('ADMIN_PASSWORD');
+    if (!adminPassword || password !== adminPassword) {
+      return null;
+    }
+    // Return a mock user object for JWT generation
+    return {
+      email: 'admin@weatherguard.local',
+      id: 'admin_id',
+      role: Role.ADMIN,
+    };
   }
 
   generateJwt(user: any) {

@@ -19,38 +19,43 @@ export class AdminController {
 
   @Get('users')
   async getUsers(
+    @Query('status') status?: Status,
     @Query('search') search?: string,
-    @Query('limit') limit?: number,
-    @Query('page') page?: number,
+    @Query('telegram') telegram?: string,
+    @Query('limit') limit: number = 10,
+    @Query('page') page: number = 1
   ) {
-    return this.adminService.getUsers(undefined, search, limit || 10, page || 1);
+    return this.adminService.getUsers(status, search, telegram, limit, page);
   }
 
   @Get('users/pending')
   async getPendingUsers(
     @Query('search') search?: string,
-    @Query('limit') limit?: number,
-    @Query('page') page?: number,
+    @Query('telegram') telegram?: string,
+    @Query('limit') limit: number = 10,
+    @Query('page') page: number = 1
   ) {
-    return this.adminService.getUsers(Status.PENDING, search, limit || 10, page || 1);
+    return this.adminService.getUsers(Status.PENDING, search, telegram, limit, page);
   }
 
   @Get('users/approved')
   async getApprovedUsers(
     @Query('search') search?: string,
-    @Query('limit') limit?: number,
-    @Query('page') page?: number,
+    @Query('telegram') telegram?: string,
+    @Query('limit') limit: number = 10,
+    @Query('page') page: number = 1
   ) {
-    return this.adminService.getUsers(Status.APPROVED, search, limit || 10, page || 1);
+    return this.adminService.getUsers(Status.APPROVED, search, telegram, limit, page);
   }
 
   @Get('users/rejected')
   async getRejectedUsers(
     @Query('search') search?: string,
-    @Query('limit') limit?: number,
-    @Query('page') page?: number,
+    @Query('telegram') telegram?: string,
+    @Query('limit') limit: number = 10,
+    @Query('page') page: number = 1
   ) {
-    return this.adminService.getUsers(Status.REJECTED, search, limit || 10, page || 1);
+    return this.adminService.getUsers(Status.REJECTED, search, telegram, limit, page);
   }
 
   @Patch('users/:id/approve')

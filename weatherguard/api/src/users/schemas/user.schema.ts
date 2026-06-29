@@ -32,11 +32,29 @@ export class User {
   @Prop()
   telegramChatId: string;
 
+  @Prop({ type: Boolean, default: false })
+  telegramConnected: boolean;
+
+  @Prop()
+  telegramConnectionToken: string;
+
+  @Prop()
+  telegramTokenExpires: Date;
+
+  @Prop()
+  telegramConnectedAt: Date;
+
   @Prop()
   city: string;
 
   @Prop({ type: [String], enum: WeatherPreference, default: [] })
   weatherPreferences: WeatherPreference[];
+
+  @Prop()
+  lastAlertSentAt: Date;
+
+  @Prop({ type: [String], default: [] })
+  lastAlertTypes: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -1,7 +1,7 @@
 import { Controller, Get, Post, UseGuards, Req, Res } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
-import { Response, Request } from 'express';
+import type { Response, Request } from 'express';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { ConfigService } from '@nestjs/config';
 
@@ -14,11 +14,11 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() req) {}
+  async googleAuth(@Req() req: any) {}
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect(@Req() req, @Res({ passthrough: true }) res: Response) {
+  async googleAuthRedirect(@Req() req: any, @Res({ passthrough: true }) res: Response) {
     const user = await this.authService.validateOAuthUser(req.user);
     const jwt = this.authService.generateJwt(user);
     
@@ -34,11 +34,11 @@ export class AuthController {
 
   @Get('github')
   @UseGuards(AuthGuard('github'))
-  async githubAuth(@Req() req) {}
+  async githubAuth(@Req() req: any) {}
 
   @Get('github/callback')
   @UseGuards(AuthGuard('github'))
-  async githubAuthRedirect(@Req() req, @Res({ passthrough: true }) res: Response) {
+  async githubAuthRedirect(@Req() req: any, @Res({ passthrough: true }) res: Response) {
     const user = await this.authService.validateOAuthUser(req.user);
     const jwt = this.authService.generateJwt(user);
     
@@ -54,7 +54,7 @@ export class AuthController {
 
   @Get('me')
   @UseGuards(JwtAuthGuard)
-  getProfile(@Req() req) {
+  getProfile(@Req() req: any) {
     return req.user;
   }
 
