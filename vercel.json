@@ -5,18 +5,18 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "admin/dist"
+        "distDir": "weatherguard/admin/dist"
       }
     },
     {
-      "src": "api/src/main.ts",
+      "src": "weatherguard/api/src/main.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/src/main.ts"
+      "dest": "/weatherguard/api/src/main.ts"
     },
     {
       "handle": "filesystem"

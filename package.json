@@ -1,0 +1,8 @@
+{
+  "name": "weatherguard-admin-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cd weatherguard/admin && npm install && npm run build"
+  }
+}
