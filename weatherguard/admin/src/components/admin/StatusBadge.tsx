@@ -9,7 +9,7 @@ export function StatusBadge({ status }: { status: Status }) {
   };
 
   return (
-    <span className={cn('inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border', styles[status])}>
+    <span className={cn('inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border whitespace-nowrap shadow-sm', styles[status])}>
       {status}
     </span>
   );

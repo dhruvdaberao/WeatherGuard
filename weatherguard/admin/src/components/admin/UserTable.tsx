@@ -89,11 +89,11 @@ export function UserTable({ users, isLoading }: UserTableProps) {
                 </td>
                 <td className="px-6 py-4 text-center">
                   {user.telegramConnected ? (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20 whitespace-nowrap shadow-sm">
                       Connected
                     </span>
                   ) : (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-400">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-slate-500/10 text-slate-600 dark:text-slate-400 border border-slate-500/20 whitespace-nowrap shadow-sm">
                       Not Connected
                     </span>
                   )}
