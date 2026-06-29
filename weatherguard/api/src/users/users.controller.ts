@@ -50,6 +50,13 @@ export class UsersController {
     return this.usersService.disconnectTelegram(userId);
   }
 
+  @Post('me/test-alert')
+  @UseGuards(JwtAuthGuard)
+  async sendTestAlert(@Req() req: any) {
+    const userId = req.user._id ? req.user._id.toString() : (req.user.id || req.user.sub);
+    return this.usersService.sendManualTestAlert(userId);
+  }
+
   @Get()
   findAll() {
     return this.usersService.findAll();

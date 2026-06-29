@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Patch, Post, Param, Query, UseGuards } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
@@ -66,6 +66,11 @@ export class AdminController {
   @Patch('users/:id/reject')
   async rejectUser(@Param('id') id: string) {
     return this.adminService.rejectUser(id);
+  }
+
+  @Post('test-alert/broadcast')
+  async broadcastTestAlert() {
+    return this.adminService.broadcastTestAlert();
   }
 }
 

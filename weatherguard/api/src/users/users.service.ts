@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -6,10 +6,16 @@ import { UpdatePreferencesDto } from './dto/update-preferences.dto';
 import { User, UserDocument } from './schemas/user.schema';
 import { Status } from './enums/status.enum';
 import { Role } from './enums/role.enum';
+import { WeatherService } from '../weather/weather.service';
+import { TelegramService } from '../telegram/telegram.service';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    private weatherService: WeatherService,
+    @Inject(forwardRef(() => TelegramService)) private telegramService: TelegramService
+  ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(createUserDto);
@@ -22,6 +28,10 @@ export class UsersService {
 
   async count(filter: any = {}): Promise<number> {
     return this.userModel.countDocuments(filter).exec();
+  }
+
+  async getActiveTelegramUsers(): Promise<UserDocument[]> {
+    return this.userModel.find({ status: Status.APPROVED, telegramConnected: true }).exec();
   }
 
   async findWithFilters(
@@ -55,6 +65,10 @@ export class UsersService {
     const user = await this.userModel.findById(id).exec();
     if (!user) throw new NotFoundException('User not found');
     return user;
+  }
+
+  async findById(id: string): Promise<UserDocument | null> {
+    return this.userModel.findById(id).exec();
   }
 
   async updateStatus(id: string, status: Status): Promise<User> {
@@ -111,5 +125,30 @@ export class UsersService {
     
     if (!updatedUser) throw new NotFoundException('User not found');
     return updatedUser;
+  }
+
+  async updateAlertHistory(id: string, alertTypes: string[]): Promise<void> {
+    await this.userModel.findByIdAndUpdate(id, {
+      $set: {
+        lastAlertSentAt: new Date(),
+        lastAlertTypes: alertTypes
+      }
+    }).exec();
+  }
+
+  async sendManualTestAlert(id: string): Promise<{ success: boolean; message: string }> {
+    const user = await this.userModel.findById(id).exec();
+    if (!user) throw new Error('User not found');
+    if (!user.telegramConnected || !user.telegramChatId) throw new Error('Telegram not connected');
+    if (!user.city) throw new Error('City not set');
+
+    const weatherData = await this.weatherService.fetchWeather(user.city);
+    if (!weatherData) throw new Error('Failed to fetch weather data for your city');
+
+    const matchedPrefs = this.weatherService.matchPreferences(weatherData, user.weatherPreferences || []);
+    const message = this.weatherService.generateAlertMessage(user.city, matchedPrefs, weatherData);
+    
+    await this.telegramService.sendMessage(user.telegramChatId, `🧪 [TEST ALERT]\n\n${message}`);
+    return { success: true, message: 'Test alert sent successfully' };
   }
 }

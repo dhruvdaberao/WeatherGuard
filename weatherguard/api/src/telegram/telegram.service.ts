@@ -89,4 +89,16 @@ export class TelegramService implements OnModuleInit {
       );
     });
   }
+
+  async sendMessage(chatId: string, message: string): Promise<void> {
+    if (!this.bot) {
+      this.logger.warn('Cannot send message: Telegram bot is not initialized');
+      return;
+    }
+    try {
+      await this.bot.sendMessage(chatId, message);
+    } catch (error) {
+      this.logger.error(`Failed to send telegram message to ${chatId}: ${error.message}`);
+    }
+  }
 }

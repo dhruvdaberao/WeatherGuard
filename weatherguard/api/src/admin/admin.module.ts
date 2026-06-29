@@ -4,9 +4,10 @@ import { AdminController } from './admin.controller';
 import { AdminAuthController } from './admin-auth.controller';
 import { UsersModule } from '../users/users.module';
 import { AuthModule } from '../auth/auth.module';
+import { TelegramModule } from '../telegram/telegram.module';
 
 @Module({
-  imports: [UsersModule, AuthModule],
+  imports: [UsersModule, AuthModule, TelegramModule],
   providers: [AdminService],
   controllers: [AdminController, AdminAuthController]
 })
