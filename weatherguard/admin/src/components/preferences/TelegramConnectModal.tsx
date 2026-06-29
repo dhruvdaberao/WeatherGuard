@@ -106,9 +106,9 @@ export function TelegramConnectModal({ isOpen, onClose }: TelegramConnectModalPr
           )}
         </div>
 
-        <div className="p-6 bg-muted/30 border-t border-border/50 flex justify-end gap-3">
-          <Button variant="outline" onClick={onClose}>Cancel</Button>
-          <Button onClick={handleDone} className="bg-[#229ED9] hover:bg-[#1d8ac0] text-white border-none">
+        <div className="p-6 bg-muted/30 border-t border-border/50 flex flex-col sm:flex-row justify-end gap-3">
+          <Button variant="outline" onClick={onClose} className="h-auto py-3 px-5 font-semibold">Cancel</Button>
+          <Button onClick={handleDone} className="bg-[#229ED9] hover:bg-[#1d8ac0] text-white border-none h-auto py-3 px-6 leading-normal font-semibold shadow-md">
             I've sent the command
           </Button>
         </div>

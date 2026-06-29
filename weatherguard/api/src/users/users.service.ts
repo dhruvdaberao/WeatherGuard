@@ -115,12 +115,8 @@ export class UsersService {
     ).exec();
 
     try {
-      let frontendUrl = process.env.FRONTEND_URL;
-      if (!frontendUrl || frontendUrl.includes('localhost') || frontendUrl.includes('127.0.0.1')) {
-        frontendUrl = 'https://weather-guard-two.vercel.app';
-      }
-      frontendUrl = frontendUrl.replace(/\/+$/, '');
-      await this.telegramService.setWebhook(`${frontendUrl}/api/telegram/webhook`);
+      const webhookUrl = 'https://weather-guard-two.vercel.app/api/telegram/webhook';
+      await this.telegramService.setWebhook(webhookUrl);
     } catch (e) {
       // ignore webhook setting errors
     }
