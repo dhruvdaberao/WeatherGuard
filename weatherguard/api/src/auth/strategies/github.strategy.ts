@@ -6,10 +6,11 @@ import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
   constructor(private configService: ConfigService) {
+    const backendUrl = configService.get<string>('BACKEND_URL') || 'http://localhost:3000';
     super({
       clientID: configService.get<string>('GITHUB_CLIENT_ID') || 'placeholder_client_id',
       clientSecret: configService.get<string>('GITHUB_CLIENT_SECRET') || 'placeholder_secret',
-      callbackURL: 'http://localhost:3000/auth/github/callback',
+      callbackURL: `${backendUrl}/api/auth/github/callback`,
       scope: ['user:email'],
     });
   }

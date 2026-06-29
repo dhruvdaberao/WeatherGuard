@@ -2,7 +2,8 @@ import { Button } from '../ui/Button';
 
 export function GoogleLoginButton() {
   const handleLogin = () => {
-    window.location.href = `${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/auth/google`;
+    const baseUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:3000/api');
+    window.location.href = `${baseUrl}/auth/google`;
   };
 
   return (
