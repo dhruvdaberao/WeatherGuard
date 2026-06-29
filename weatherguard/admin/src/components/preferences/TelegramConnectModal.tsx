@@ -72,15 +72,15 @@ export function TelegramConnectModal({ isOpen, onClose }: TelegramConnectModalPr
               <div className="space-y-4">
                 <div>
                   <div className="text-sm font-semibold text-primary mb-1">STEP 1</div>
-                  <p className="text-sm text-foreground">Open Telegram and search for our bot, or click the link below:</p>
+                  <p className="text-sm text-foreground">Click the auto-connect link below or open Telegram manually:</p>
                   <a 
-                    href={`https://t.me/${generateTokenMutation.data.botUsername}`} 
+                    href={`https://t.me/${generateTokenMutation.data.botUsername}?start=${generateTokenMutation.data.token}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-[#229ED9] hover:underline font-medium mt-2 text-sm"
+                    className="inline-flex items-center gap-2 text-[#229ED9] hover:underline font-semibold mt-2 text-sm bg-[#229ED9]/10 px-3 py-2 rounded-lg border border-[#229ED9]/20"
                   >
                     <TelegramLogo className="w-4 h-4" />
-                    t.me/{generateTokenMutation.data.botUsername}
+                    Connect Automatically on Telegram (Click Here)
                   </a>
                 </div>
 

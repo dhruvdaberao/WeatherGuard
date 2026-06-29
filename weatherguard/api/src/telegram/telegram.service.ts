@@ -43,14 +43,14 @@ export class TelegramService implements OnModuleInit {
     const chatId = msg.chat.id;
     const text = msg.text;
 
-    const startMatch = text.match(/\/start (.+)/);
-    if (startMatch) {
-      const token = startMatch[1];
+    const parts = text.trim().split(/\s+/);
+    if (parts[0].startsWith('/start') && parts.length > 1) {
+      const token = parts[1].split('@')[0].trim();
       await this.processStartToken(chatId, token);
       return;
     }
 
-    if (text === '/start') {
+    if (text === '/start' || text.startsWith('/start@')) {
       await this.bot.sendMessage(
         chatId,
         'Welcome to WeatherGuard! To connect your account, please use the unique link provided in your web dashboard.'
@@ -60,7 +60,10 @@ export class TelegramService implements OnModuleInit {
 
   private async processStartToken(chatId: number, token: string) {
     try {
-      const user = await this.userModel.findOne({ telegramConnectionToken: token });
+      const cleanToken = token.trim().toUpperCase();
+      const user = await this.userModel.findOne({ 
+        telegramConnectionToken: { $regex: new RegExp(`^${cleanToken}$`, 'i') } 
+      });
 
       if (!user) {
         await this.bot.sendMessage(
@@ -81,6 +84,12 @@ export class TelegramService implements OnModuleInit {
         );
         return;
       }
+
+      // Disconnect any other user account currently using this same Telegram Chat ID to prevent multi-account conflicts
+      await this.userModel.updateMany(
+        { telegramChatId: chatId.toString(), _id: { $ne: user._id } },
+        { $unset: { telegramChatId: "", telegramConnectedAt: "" }, $set: { telegramConnected: false } }
+      );
 
       await this.userModel.updateOne(
         { _id: user._id },

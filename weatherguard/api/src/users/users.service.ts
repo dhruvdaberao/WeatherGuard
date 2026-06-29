@@ -113,6 +113,14 @@ export class UsersService {
       id,
       { $set: { telegramConnectionToken: token, telegramTokenExpires: expires } }
     ).exec();
+
+    try {
+      const frontendUrl = process.env.FRONTEND_URL || 'https://weather-guard-two.vercel.app';
+      await this.telegramService.setWebhook(`${frontendUrl}/api/telegram/webhook`);
+    } catch (e) {
+      // ignore webhook setting errors
+    }
+
     return { token, botUsername: process.env.TELEGRAM_BOT_USERNAME || 'WeatherGuard_Bot' };
   }
 
