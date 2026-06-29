@@ -66,25 +66,25 @@ export function LoginPage() {
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col items-center justify-center p-6 relative z-10 w-full max-w-md mx-auto">
-        <div className="w-full space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 py-8 sm:p-6 relative z-10 w-full max-w-md mx-auto">
+        <div className="w-full space-y-8 sm:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
           
           {/* Header Section */}
-          <div className="text-center space-y-6">
+          <div className="text-center space-y-4 sm:space-y-6">
             <div className="flex justify-center group">
-              <Logo className="text-slate-900 dark:text-slate-100 w-[84px] h-[84px] drop-shadow-md transition-transform duration-500 ease-in-out group-hover:scale-110 group-hover:-translate-y-1" />
+              <Logo className="text-slate-900 dark:text-slate-100 w-16 h-16 sm:w-[84px] sm:h-[84px] drop-shadow-md transition-transform duration-500 ease-in-out group-hover:scale-110 group-hover:-translate-y-1" />
             </div>
             
-            <div className="space-y-4">
-              <h1 className="font-bubble text-5xl sm:text-6xl font-bold tracking-normal whitespace-nowrap flex items-center justify-center">
+            <div className="space-y-3 sm:space-y-4">
+              <h1 className="font-bubble text-3xl sm:text-5xl md:text-6xl font-bold tracking-normal flex flex-wrap items-center justify-center text-center">
                 <span className="text-secondary drop-shadow-sm">WEATHER</span>
-                <span className="text-primary mx-1.5">-</span>
+                <span className="text-primary mx-1 sm:mx-1.5">-</span>
                 <span className="text-primary drop-shadow-sm">GUARD</span>
               </h1>
-              <p className="text-base sm:text-lg text-muted-foreground font-medium leading-relaxed max-w-lg mx-auto">
+              <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-medium leading-relaxed max-w-lg mx-auto px-2">
                 Enterprise-grade weather intelligence and automated alert workflows.
               </p>
-              <div className="text-sm text-muted-foreground/80 leading-relaxed pt-2">
+              <div className="text-xs sm:text-sm text-muted-foreground/80 leading-relaxed pt-1 sm:pt-2">
                 <p>Assignment Project for AI47Labs.</p>
                 <p>Designed and developed by Dhruv Daberao.</p>
               </div>
@@ -92,15 +92,15 @@ export function LoginPage() {
           </div>
 
           {/* Action Buttons */}
-          <div className="space-y-4 w-full pt-4">
+          <div className="space-y-3 sm:space-y-4 w-full pt-2 sm:pt-4">
             <GoogleLoginButton />
             <GitHubLoginButton />
             <Button 
               variant="outline" 
-              className="w-full relative h-12 flex items-center justify-center gap-3 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 hover:shadow-md transition-all duration-200 uppercase font-semibold tracking-wide text-[13px]" 
+              className="w-full relative h-12 flex items-center justify-center gap-3 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 hover:shadow-md transition-all duration-200 uppercase font-semibold tracking-wide text-xs sm:text-[13px]" 
               onClick={() => setIsAdminModalOpen(true)}
             >
-              <Lock className="w-5 h-5 shrink-0 text-muted-foreground" />
+              <Lock className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-muted-foreground" />
               <span>Admin Login</span>
             </Button>
           </div>
@@ -109,12 +109,12 @@ export function LoginPage() {
 
       {/* Footer */}
       <footer className="w-full py-6 px-4 relative z-10 border-t border-border/40 bg-background/50 backdrop-blur-md">
-        <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-muted-foreground">
+        <div className="max-w-4xl mx-auto flex flex-wrap justify-center items-center gap-x-4 sm:gap-x-8 gap-y-3 text-xs sm:text-sm font-medium text-muted-foreground text-center">
           <Link to="/terms" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Terms of Service</Link>
           <Link to="/privacy" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Privacy Policy</Link>
           <button onClick={() => setIsContactModalOpen(true)} className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Contact Me</button>
-          <Link to="/hire-me" className="flex items-center gap-1.5 text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-2 py-0.5 bg-primary/10">
-            <Briefcase className="w-4 h-4" /> Why you should hire me?
+          <Link to="/hire-me" className="w-full sm:w-auto justify-center flex items-center gap-1.5 text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-3 py-1 bg-primary/10 font-semibold">
+            <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Why you should hire me?
           </Link>
         </div>
       </footer>
