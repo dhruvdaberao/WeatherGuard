@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, Inject, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -150,17 +150,21 @@ export class UsersService {
 
   async sendManualTestAlert(id: string): Promise<{ success: boolean; message: string }> {
     const user = await this.userModel.findById(id).exec();
-    if (!user) throw new Error('User not found');
-    if (!user.telegramConnected || !user.telegramChatId) throw new Error('Telegram not connected');
-    if (!user.city) throw new Error('City not set');
-
-    const weatherData = await this.weatherService.fetchWeather(user.city);
-    if (!weatherData) throw new Error('Failed to fetch weather data for your city');
+    if (!user) throw new BadRequestException('User account not found');
+    if (!user.telegramConnected || !user.telegramChatId) {
+      throw new BadRequestException('Your Telegram account is not connected. Please connect it first.');
+    }
+    
+    const city = user.city || 'Pune';
+    const weatherData = await this.weatherService.fetchWeather(city);
+    if (!weatherData) {
+      throw new BadRequestException(`Failed to fetch weather data for "${city}". Please update your City in the dashboard preferences.`);
+    }
 
     const matchedPrefs = this.weatherService.matchPreferences(weatherData, user.weatherPreferences || []);
-    const message = this.weatherService.generateAlertMessage(user.city, matchedPrefs, weatherData);
+    const message = this.weatherService.generateAlertMessage(city, matchedPrefs, weatherData);
     
     await this.telegramService.sendMessage(user.telegramChatId, `🧪 [TEST ALERT]\n\n${message}`);
-    return { success: true, message: 'Test alert sent successfully' };
+    return { success: true, message: `Test alert sent successfully for ${city}!` };
   }
 }

@@ -25,7 +25,11 @@ export class TelegramController {
 
   @Post('webhook')
   async handleWebhook(@Body() update: any) {
-    await this.telegramService.handleWebhookUpdate(update);
+    try {
+      await this.telegramService.handleWebhookUpdate(update);
+    } catch (error) {
+      // Always return 200 OK so Telegram does not block webhook delivery queue on error
+    }
     return { ok: true };
   }
 
