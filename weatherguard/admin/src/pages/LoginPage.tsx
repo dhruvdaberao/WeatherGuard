@@ -22,15 +22,13 @@ import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 
 export function LoginPage() {
-  const { isAuthenticated, isLoading, adminLogin, user } = useAuth();
+  const { isAuthenticated, adminLogin, user } = useAuth();
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [adminPassword, setAdminPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [adminError, setAdminError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-
-  if (isLoading) return null;
 
   if (isAuthenticated) {
     if (user?.role === 'ADMIN') {

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { UnauthorizedPage } from './pages/UnauthorizedPage';
@@ -76,7 +76,7 @@ function App() {
           <ProtectedRoute><AdminRoute><AdminLayout><RejectedUsersPage /></AdminLayout></AdminRoute></ProtectedRoute>
         } />
 
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<LoginPage />} />
       </Routes>
       </Router>
     </>
