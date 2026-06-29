@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "admin/package.json",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist"
@@ -19,16 +19,8 @@
       "destination": "/api/src/main.ts"
     },
     {
-      "source": "/assets/(.*)",
-      "destination": "/admin/assets/$1"
-    },
-    {
-      "source": "/(favicon\\.svg|manifest\\.json|.*\\.png|.*\\.avif)",
-      "destination": "/admin/$1"
-    },
-    {
       "source": "/(.*)",
-      "destination": "/admin/index.html"
+      "destination": "/index.html"
     }
   ],
   "crons": [
