@@ -21,7 +21,7 @@ async function getApp(): Promise<express.Express> {
       app.setGlobalPrefix('api');
 
       app.enableCors({
-        origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+        origin: process.env.VERCEL ? true : (process.env.FRONTEND_URL || 'http://localhost:5173'),
         credentials: true,
       });
 

@@ -29,7 +29,8 @@ export class AuthController {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    res.redirect(this.configService.get<string>('FRONTEND_URL') || 'http://localhost:5173/dashboard');
+    const frontendUrl = process.env.VERCEL ? '' : (this.configService.get<string>('FRONTEND_URL') || 'http://localhost:5173');
+    res.redirect(`${frontendUrl}/dashboard`);
   }
 
   @Get('github')
@@ -49,7 +50,8 @@ export class AuthController {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    res.redirect(this.configService.get<string>('FRONTEND_URL') || 'http://localhost:5173/dashboard');
+    const frontendUrl = process.env.VERCEL ? '' : (this.configService.get<string>('FRONTEND_URL') || 'http://localhost:5173');
+    res.redirect(`${frontendUrl}/dashboard`);
   }
 
   @Get('me')
