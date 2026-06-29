@@ -13,25 +13,22 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "api/src/main.ts"
+      "source": "/api/(.*)",
+      "destination": "/api/src/main.ts"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/admin/assets/$1"
+      "source": "/assets/(.*)",
+      "destination": "/admin/assets/$1"
     },
     {
-      "src": "/(favicon\\.svg|manifest\\.json|.*\\.png|.*\\.avif)",
-      "dest": "/admin/$1"
+      "source": "/(favicon\\.svg|manifest\\.json|.*\\.png|.*\\.avif)",
+      "destination": "/admin/$1"
     },
     {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/admin/index.html"
+      "source": "/(.*)",
+      "destination": "/admin/index.html"
     }
   ],
   "crons": [
