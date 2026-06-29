@@ -33,6 +33,15 @@ export class TelegramService implements OnModuleInit {
     this.logger.log(`Webhook set to ${url}`);
   }
 
+  async getWebhookInfo() {
+    if (!this.bot) return { error: 'Bot not initialized' };
+    try {
+      return await this.bot.getWebHookInfo();
+    } catch (err: any) {
+      return { error: err.message };
+    }
+  }
+
   async handleWebhookUpdate(update: any) {
     if (!this.bot) return;
     
