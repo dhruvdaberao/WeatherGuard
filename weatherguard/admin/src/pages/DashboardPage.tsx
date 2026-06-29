@@ -120,7 +120,7 @@ export function DashboardPage() {
 
           <div className="grid gap-6 lg:grid-cols-3 items-start relative">
             
-            <div className={`lg:col-span-2 bg-card rounded-2xl border border-blue-200/80 dark:border-blue-800/50 shadow-md hover:shadow-lg transition-all duration-300 p-6 md:p-8 space-y-6 relative overflow-hidden ${isLocked ? 'opacity-50 pointer-events-none' : ''}`}>
+            <div className={`lg:col-span-2 bg-card rounded-2xl border border-blue-200/80 dark:border-blue-800/50 shadow-md hover:shadow-lg transition-all duration-300 p-6 md:p-8 space-y-6 relative overflow-hidden ${isLocked ? 'pointer-events-none' : ''}`}>
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-border/50 pb-6">
                 <div>
                   <h3 className="font-semibold text-xl tracking-tight">Your Preferences</h3>
@@ -144,7 +144,7 @@ export function DashboardPage() {
                   <div className="flex flex-col sm:flex-row sm:justify-between py-4 border-b border-border/40">
                     <span className="text-muted-foreground font-medium mb-2 sm:mb-0">Alert City</span>
                     {user.city ? (
-                      <span className="px-3 py-1 bg-blue-500/10 text-blue-600 dark:text-blue-400 text-sm font-bold rounded-full border border-blue-500/20 flex items-center gap-1.5 shadow-sm">
+                      <span className="px-3 py-1 bg-blue-500/10 text-blue-600 dark:text-blue-400 text-sm font-bold rounded-full border border-blue-500/20 flex items-center gap-1.5 shadow-sm w-fit">
                         <MapPin className="w-4 h-4" />
                         {user.city}
                       </span>
@@ -179,11 +179,23 @@ export function DashboardPage() {
                   </div>
                 </div>
               )}
+
+              {isLocked && (
+                <div className="absolute inset-0 z-20 bg-background/70 backdrop-blur-[3px] flex flex-col items-center justify-center p-6 text-center pointer-events-auto">
+                   <div className="p-5 bg-card/95 rounded-2xl shadow-xl border border-border flex flex-col items-center max-w-xs animate-in fade-in zoom-in-95 duration-300">
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 shadow-sm">
+                        <Lock className="w-6 h-6 text-primary" />
+                      </div>
+                      <p className="font-semibold text-base text-foreground">Preferences Locked</p>
+                      <p className="text-xs text-muted-foreground mt-1 leading-relaxed">Only approved accounts can configure active weather alerts and locations.</p>
+                   </div>
+                </div>
+              )}
             </div>
             
-            <div className={`lg:col-span-1 bg-card rounded-2xl border border-blue-200/80 dark:border-blue-800/50 shadow-md hover:shadow-lg transition-all duration-300 p-6 md:p-8 flex flex-col items-center justify-center text-center space-y-6 ${isLocked ? 'opacity-50 pointer-events-none' : ''}`}>
-              <TelegramLogo className="w-16 h-16" />
-              <div>
+            <div className={`lg:col-span-1 bg-card rounded-2xl border border-blue-200/80 dark:border-blue-800/50 shadow-md hover:shadow-lg transition-all duration-300 p-6 md:p-8 flex flex-col items-center justify-center text-center space-y-6 relative overflow-hidden ${isLocked ? 'pointer-events-none' : ''}`}>
+              <TelegramLogo className="w-16 h-16 shrink-0" />
+              <div className="w-full">
                 <h3 className="font-semibold text-lg tracking-tight mb-2">Telegram Integration</h3>
                 
                 {user.telegramConnected ? (
@@ -235,8 +247,20 @@ export function DashboardPage() {
                   disabled={isLocked}
                   onClick={() => setIsTelegramModalOpen(true)}
                 >
-                  <TelegramLogo className="w-5 h-5" /> Connect Telegram
+                  <TelegramLogo className="w-5 h-5 shrink-0" /> Connect Telegram
                 </Button>
+              )}
+
+              {isLocked && (
+                <div className="absolute inset-0 z-20 bg-background/70 backdrop-blur-[3px] flex flex-col items-center justify-center p-6 text-center pointer-events-auto">
+                   <div className="p-5 bg-card/95 rounded-2xl shadow-xl border border-border flex flex-col items-center max-w-xs animate-in fade-in zoom-in-95 duration-300">
+                      <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-3 shadow-sm">
+                        <Lock className="w-6 h-6 text-blue-500" />
+                      </div>
+                      <p className="font-semibold text-base text-foreground">Integration Locked</p>
+                      <p className="text-xs text-muted-foreground mt-1 leading-relaxed">Only approved accounts can connect Telegram automated bots.</p>
+                   </div>
+                </div>
               )}
             </div>
 
@@ -245,16 +269,6 @@ export function DashboardPage() {
                 isOpen={isTelegramModalOpen} 
                 onClose={() => setIsTelegramModalOpen(false)} 
               />
-            )}
-
-            {isLocked && (
-              <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center pointer-events-auto">
-                 <div className="p-4 bg-background/80 backdrop-blur-sm rounded-2xl shadow-sm border flex flex-col items-center">
-                    <Lock className="w-8 h-8 text-muted-foreground mb-3" />
-                    <p className="font-medium text-foreground">Feature Locked</p>
-                    <p className="text-sm text-muted-foreground mt-1 max-w-[200px]">Only approved accounts can configure preferences and integrations.</p>
-                 </div>
-              </div>
             )}
           </div>
         </div>
