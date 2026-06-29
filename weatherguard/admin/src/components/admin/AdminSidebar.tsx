@@ -30,23 +30,24 @@ export function AdminSidebar({ isOpen, setIsOpen }: AdminSidebarProps) {
         />
       )}
       <aside className={cn(
-        "fixed md:static inset-y-0 left-0 z-50 w-64 border-r bg-card min-h-screen p-4 flex flex-col gap-2 transform transition-transform duration-200 ease-in-out md:transform-none",
+        "fixed md:static inset-y-0 left-0 z-50 w-72 border-r bg-card min-h-screen p-4 flex flex-col gap-2 transform transition-transform duration-200 ease-in-out md:transform-none shadow-xl md:shadow-none",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
-        <div className="px-4 py-6 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Logo className="text-slate-900 dark:text-slate-100 w-10 h-10 drop-shadow-sm shrink-0" />
-            <div>
-              <h2 className="text-xl font-bubble font-bold tracking-tight whitespace-nowrap">
+        <div className="py-4 px-2 flex items-center justify-between gap-2 border-b border-border/40 mb-2 shrink-0">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <Logo className="text-slate-900 dark:text-slate-100 w-9 h-9 drop-shadow-sm shrink-0" />
+            <div className="min-w-0">
+              <h2 className="text-lg font-bubble font-bold tracking-tight whitespace-nowrap truncate">
                 <span className="text-secondary drop-shadow-sm">WEATHER</span>
                 <span className="text-primary mx-1">-</span>
                 <span className="text-primary drop-shadow-sm">GUARD</span>
               </h2>
-              <p className="text-xs text-muted-foreground mt-0.5">Admin Portal</p>
+              <p className="text-xs text-muted-foreground mt-0.5 font-medium">Admin Portal</p>
             </div>
           </div>
-          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsOpen(false)}>
-            <X className="w-5 h-5" />
+          <Button variant="ghost" size="icon" className="md:hidden shrink-0 h-8 w-8 rounded-full hover:bg-muted ml-auto" onClick={() => setIsOpen(false)}>
+            <X className="w-4 h-4 text-muted-foreground" />
+            <span className="sr-only">Close</span>
           </Button>
         </div>
         <nav className="flex-1 space-y-1">
