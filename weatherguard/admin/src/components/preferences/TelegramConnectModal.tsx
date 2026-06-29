@@ -72,16 +72,35 @@ export function TelegramConnectModal({ isOpen, onClose }: TelegramConnectModalPr
               <div className="space-y-4">
                 <div>
                   <div className="text-sm font-semibold text-primary mb-1">STEP 1</div>
-                  <p className="text-sm text-foreground">Click the auto-connect link below or open Telegram manually:</p>
-                  <a 
-                    href={`https://t.me/${generateTokenMutation.data.botUsername}?start=${generateTokenMutation.data.token}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-[#229ED9] hover:underline font-semibold mt-2 text-sm bg-[#229ED9]/10 px-3 py-2 rounded-lg border border-[#229ED9]/20"
-                  >
-                    <TelegramLogo className="w-4 h-4" />
-                    Connect Automatically on Telegram (Click Here)
-                  </a>
+                  <p className="text-sm text-foreground">Choose your platform to open the bot chat:</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-3">
+                    <a 
+                      href={`https://t.me/${generateTokenMutation.data.botUsername}?start=${generateTokenMutation.data.token}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 text-white bg-[#229ED9] hover:bg-[#1d8ac0] font-semibold text-xs sm:text-sm px-3 py-2.5 rounded-xl shadow transition-all active:scale-95"
+                    >
+                      <TelegramLogo className="w-4 h-4 brightness-200" />
+                      Open Telegram App
+                    </a>
+                    <a 
+                      href={`https://web.telegram.org/k/#@${generateTokenMutation.data.botUsername}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      onClick={() => {
+                        if (generateTokenMutation.data?.token) {
+                          navigator.clipboard.writeText(`/start ${generateTokenMutation.data.token}`);
+                          setCopied(true);
+                          setTimeout(() => setCopied(false), 2000);
+                          toast.success('Command copied! Just Ctrl+V / Paste in Telegram Web');
+                        }
+                      }}
+                      className="inline-flex items-center justify-center gap-2 text-[#229ED9] bg-[#229ED9]/10 hover:bg-[#229ED9]/20 font-semibold text-xs sm:text-sm px-3 py-2.5 rounded-xl border border-[#229ED9]/30 transition-all active:scale-95"
+                    >
+                      <TelegramLogo className="w-4 h-4" />
+                      Open Telegram Web
+                    </a>
+                  </div>
                 </div>
 
                 <div>
