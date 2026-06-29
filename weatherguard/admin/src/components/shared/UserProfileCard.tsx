@@ -19,9 +19,9 @@ export function UserProfileCard({ name, email, avatar, role, onLogout, variant =
     return (
       <div className={cn("flex items-center justify-end gap-1 sm:gap-2", variant === 'card' ? "p-4" : "py-2")}>
         <ThemeToggle />
-        <Button variant="ghost" size="sm" onClick={onLogout} className="gap-1.5 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 shrink-0 whitespace-nowrap px-2 sm:px-3">
-          <LogOut className="w-4 h-4 shrink-0" />
-          <span className="hidden sm:inline">Sign Out</span>
+        <Button variant="ghost" size="sm" onClick={onLogout} className="gap-2 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 shrink-0 whitespace-nowrap px-2 sm:px-3">
+          <LogOut className="w-5 h-5 shrink-0" strokeWidth={2.25} />
+          <span className="hidden sm:inline font-medium">Sign Out</span>
         </Button>
       </div>
     );
@@ -47,9 +47,9 @@ export function UserProfileCard({ name, email, avatar, role, onLogout, variant =
       </div>
       <div className="flex items-center justify-end gap-2 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-border/50">
         <ThemeToggle />
-        <Button variant="ghost" size="sm" onClick={onLogout} className="gap-1.5 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 shrink-0 whitespace-nowrap ml-auto sm:ml-0">
-          <LogOut className="w-4 h-4 shrink-0" />
-          <span>Sign Out</span>
+        <Button variant="ghost" size="sm" onClick={onLogout} className="gap-2 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 shrink-0 whitespace-nowrap ml-auto sm:ml-0">
+          <LogOut className="w-5 h-5 shrink-0" strokeWidth={2.25} />
+          <span className="font-medium">Sign Out</span>
         </Button>
       </div>
     </div>
