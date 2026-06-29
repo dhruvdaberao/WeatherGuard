@@ -1,4 +1,5 @@
 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" fill="#ffffff" />
   <g stroke="#222" stroke-width="3" stroke-linecap="round">
     <line x1="60" y1="8" x2="60" y2="15" />
     <line x1="82" y1="18" x2="87" y2="13" />
