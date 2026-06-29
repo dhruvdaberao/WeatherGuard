@@ -14,6 +14,7 @@ import { LoadingState } from '../components/shared/LoadingState';
 import toast from 'react-hot-toast';
 import { Navigate } from 'react-router-dom';
 import { TelegramConnectModal } from '../components/preferences/TelegramConnectModal';
+import { Logo } from '../components/shared/Logo';
 
 export function DashboardPage() {
   const { user, logout, isLoading } = useAuth();
@@ -108,6 +109,18 @@ export function DashboardPage() {
 
       <div className="relative z-10 p-4 sm:p-8 md:p-12 lg:p-16">
         <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          
+          <div className="text-center space-y-2 pt-2 sm:pt-0">
+            <div className="flex justify-center group">
+              <Logo className="text-slate-900 dark:text-slate-100 w-12 h-12 sm:w-14 sm:h-14 drop-shadow-md transition-transform duration-500 ease-in-out group-hover:scale-110 group-hover:-translate-y-1" />
+            </div>
+            <h1 className="font-bubble text-2xl sm:text-3xl font-bold tracking-normal flex items-center justify-center text-center">
+              <span className="text-secondary drop-shadow-sm">WEATHER</span>
+              <span className="text-primary mx-1">-</span>
+              <span className="text-primary drop-shadow-sm">GUARD</span>
+            </h1>
+          </div>
+
           <UserProfileCard
             name={user.name}
             email={user.email}
