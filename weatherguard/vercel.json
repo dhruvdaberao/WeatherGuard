@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "admin/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    },
+    {
+      "src": "api/src/main.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/src/main.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "admin/$1"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/weather",
+      "schedule": "0 * * * *"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../services/api';
-import { User } from '../types/auth';
+import type { User } from '../types/auth';
 
 export function useAuth() {
   const { data: user, isLoading, error, refetch } = useQuery<User | null>({
@@ -21,11 +21,18 @@ export function useAuth() {
     await refetch();
   };
 
+  const adminLogin = async (password: string) => {
+    const res = await api.post('/admin/login', { password });
+    await refetch();
+    return res.data;
+  };
+
   return {
     user,
     isLoading,
     error,
     isAuthenticated: !!user,
     logout,
+    adminLogin,
   };
 }

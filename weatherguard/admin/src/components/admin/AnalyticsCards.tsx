@@ -1,4 +1,4 @@
-import { Users, Clock, CheckCircle, XCircle } from 'lucide-react';
+import { Users, Clock, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 
 interface AnalyticsCardsProps {
@@ -7,6 +7,8 @@ interface AnalyticsCardsProps {
     pendingUsers: number;
     approvedUsers: number;
     rejectedUsers: number;
+    telegramConnectedUsers: number;
+    alertsSentToday: number;
   };
 }
 
@@ -15,11 +17,12 @@ export function AnalyticsCards({ stats }: AnalyticsCardsProps) {
     { title: 'Total Users', value: stats.totalUsers, icon: Users, color: 'text-blue-500' },
     { title: 'Pending Approval', value: stats.pendingUsers, icon: Clock, color: 'text-yellow-500' },
     { title: 'Approved Users', value: stats.approvedUsers, icon: CheckCircle, color: 'text-green-500' },
-    { title: 'Rejected Users', value: stats.rejectedUsers, icon: XCircle, color: 'text-red-500' },
+    { title: 'Telegram Connected', value: stats.telegramConnectedUsers, icon: Users, color: 'text-indigo-500' },
+    { title: 'Alerts Sent Today', value: stats.alertsSentToday, icon: CheckCircle, color: 'text-teal-500' },
   ];
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-5">
       {cards.map((card) => {
         const Icon = card.icon;
         return (

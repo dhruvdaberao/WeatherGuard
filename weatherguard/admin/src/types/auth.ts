@@ -10,7 +10,10 @@ export enum Status {
 }
 
 export interface User {
-  id: string;
+  id?: string;
+  telegramChatId?: string;
+  telegramConnected?: boolean;
+  telegramConnectedAt?: Date;
   name: string;
   email: string;
   avatar?: string;

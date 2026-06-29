@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/Card';
+import { Card, CardHeader, CardTitle, CardDescription } from '../ui/Card';
 import { Clock, CheckCircle2, XCircle } from 'lucide-react';
 import { Status } from '../../types/auth';
 
@@ -15,7 +14,7 @@ export function RequestStatusCard({ status }: RequestStatusCardProps) {
       description: 'Your account is currently under review by an administrator.',
       color: 'text-yellow-500',
       bgColor: 'bg-yellow-500/10',
-      borderColor: 'border-yellow-500/20',
+      borderColor: 'border-yellow-500/30',
     },
     [Status.APPROVED]: {
       icon: CheckCircle2,
@@ -23,7 +22,7 @@ export function RequestStatusCard({ status }: RequestStatusCardProps) {
       description: 'You have full access to WeatherGuard alerts.',
       color: 'text-green-500',
       bgColor: 'bg-green-500/10',
-      borderColor: 'border-green-500/20',
+      borderColor: 'border-green-500/30',
     },
     [Status.REJECTED]: {
       icon: XCircle,
@@ -31,7 +30,7 @@ export function RequestStatusCard({ status }: RequestStatusCardProps) {
       description: 'Your request for access has been declined.',
       color: 'text-destructive',
       bgColor: 'bg-destructive/10',
-      borderColor: 'border-destructive/20',
+      borderColor: 'border-destructive/30',
     },
   };
 
@@ -39,7 +38,7 @@ export function RequestStatusCard({ status }: RequestStatusCardProps) {
   const Icon = current.icon;
 
   return (
-    <Card className={`border ${current.borderColor}`}>
+    <Card className={`border ${current.borderColor} shadow-md hover:shadow-lg transition-shadow duration-300`}>
       <CardHeader className="flex flex-row items-center gap-4 pb-4">
         <div className={`p-3 rounded-full ${current.bgColor}`}>
           <Icon className={`w-6 h-6 ${current.color}`} />

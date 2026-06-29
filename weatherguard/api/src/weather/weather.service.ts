@@ -112,20 +112,25 @@ export class WeatherService {
       msg += `Conditions matched your preferences.\n\n`;
     }
 
-    msg += `🌡 Temperature: ${temp}°C\n`;
+    msg += `🌡 Temperature:\n${temp}°C\n\n`;
     
     // Add dynamic advice
+    let advice = '';
     if (matchedAlerts.includes(WeatherPreference.RAIN) || matchedAlerts.includes(WeatherPreference.THUNDERSTORM)) {
-      msg += `\nStay dry and carry an umbrella.`;
+      advice = `Stay hydrated and carry an umbrella.`;
     } else if (matchedAlerts.includes(WeatherPreference.HIGH_TEMPERATURE)) {
-      msg += `\nStay hydrated and avoid direct sun.`;
+      advice = `Stay hydrated and avoid direct sun.`;
     } else if (matchedAlerts.includes(WeatherPreference.LOW_TEMPERATURE) || matchedAlerts.includes(WeatherPreference.SNOW)) {
-      msg += `\nBundle up and stay warm.`;
+      advice = `Bundle up and stay warm.`;
     } else if (matchedAlerts.includes(WeatherPreference.HIGH_WIND) || matchedAlerts.includes(WeatherPreference.SEVERE_WEATHER)) {
-      msg += `\nStay safe and secure loose objects.`;
+      advice = `Stay safe and secure loose objects.`;
+    }
+    
+    if (advice) {
+      msg += `${advice}\n\n`;
     }
 
-    msg += `\n\n— WeatherGuard`;
+    msg += `— WeatherGuard`;
     return msg;
   }
 }
