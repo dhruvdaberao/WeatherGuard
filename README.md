@@ -29,6 +29,14 @@ PICT Pune
 
 ---
 
+## 🚀 Live Demo & Video Walkthrough
+
+- **Live Production App**: [https://weather-guard-two.vercel.app](https://weather-guard-two.vercel.app)
+- **YouTube Demo Video**: [Watch Full Walkthrough on YouTube (https://youtu.be/zWwknFAIqu4)](https://youtu.be/zWwknFAIqu4)
+- **GitHub Repository**: [https://github.com/dhruvdaberao/WeatherGuard](https://github.com/dhruvdaberao/WeatherGuard)
+
+---
+
 ## Project Overview
 
 **WeatherGuard** is an invite-only, enterprise-grade weather intelligence platform designed to deliver personalized, proactive meteorological alerts directly to users via Telegram. Built with a strict security-first authorization model, the application ensures that only vetted and approved users gain access to automated weather monitoring and notification flows.
