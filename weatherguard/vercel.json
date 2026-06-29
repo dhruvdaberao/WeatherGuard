@@ -19,8 +19,18 @@
       "dest": "api/src/main.ts"
     },
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/(.*)",
-      "dest": "admin/$1"
+      "dest": "/admin/$1"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/admin/index.html"
     }
   ],
   "crons": [
