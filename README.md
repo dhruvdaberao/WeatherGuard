@@ -129,6 +129,31 @@ WeatherGuard is deployed using a modern, serverless monorepo architecture engine
 
 ---
 
+## Scheduling Architecture
+
+The original implementation plan considered `node-cron` as suggested in the assignment requirements. However, to enable a fully serverless architecture and deploy the entire application on a single Vercel project, the scheduling mechanism was migrated to **Vercel Cron Jobs**.
+
+Vercel Cron provides equivalent periodic execution without requiring long-running backend processes or dedicated servers.
+
+The implementation still satisfies all functional requirements by providing:
+- ✓ **Automated weather checks**
+- ✓ **Periodic task execution**
+- ✓ **Preference-based filtering**
+- ✓ **Telegram notification delivery**
+- ✓ **Anti-spam protections**
+- ✓ **Fully automated alert generation**
+
+### Architectural Benefits
+- **Single-platform deployment**: Consolidates frontend static assets, serverless APIs, and background tasks under one unified provider.
+- **Serverless scalability**: Eliminates idle server costs while scaling execution capacity dynamically on demand.
+- **Lower operational complexity**: Removes the need for managing virtual machines, PM2 process managers, or persistent containers.
+- **Native Vercel integration**: Configured cleanly via `vercel.json` with built-in execution monitoring and authorization headers.
+- **No persistent worker processes required**: Functions execute statelessly and spin down immediately after completing the weather monitoring loop.
+
+*The functional behavior remains identical to a traditional node-cron implementation while being optimized for a serverless deployment environment.*
+
+---
+
 ## Database Schema
 
 The application stores all core identity, preference, and analytical state within the `Users` collection hosted on MongoDB Atlas.
