@@ -107,13 +107,20 @@ export function LoginPage() {
 
       {/* Footer */}
       <footer className="w-full py-6 px-4 relative z-10 border-t border-border/40 bg-background/50 backdrop-blur-md">
-        <div className="max-w-4xl mx-auto flex flex-wrap justify-center items-center gap-x-4 sm:gap-x-8 gap-y-3 text-xs sm:text-sm font-medium text-muted-foreground text-center">
-          <Link to="/terms" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Terms of Service</Link>
-          <Link to="/privacy" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Privacy Policy</Link>
-          <button onClick={() => setIsContactModalOpen(true)} className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Contact Me</button>
-          <Link to="/hire-me" className="w-full sm:w-auto justify-center flex items-center gap-1.5 text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-3 py-1 bg-primary/10 font-semibold">
-            <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Why you should hire me?
+        <div className="max-w-md mx-auto flex flex-col items-center gap-4">
+          <Link 
+            to="/hire-me" 
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#229ED9] to-[#1d8ac0] text-white font-bold text-sm sm:text-base shadow-lg shadow-[#229ED9]/25 hover:shadow-xl hover:shadow-[#229ED9]/35 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
+          >
+            <Briefcase className="w-5 h-5 shrink-0" />
+            <span>Why you should hire me?</span>
           </Link>
+
+          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-xs sm:text-sm font-medium text-muted-foreground">
+            <Link to="/terms" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Terms of Service</Link>
+            <Link to="/privacy" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Privacy Policy</Link>
+            <button onClick={() => setIsContactModalOpen(true)} className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Contact Me</button>
+          </div>
         </div>
       </footer>
 
@@ -187,9 +194,9 @@ export function LoginPage() {
                 <div className="w-10 h-10 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
                   <Mail className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <h3 className="font-medium text-foreground">Email</h3>
-                  <p className="text-sm text-muted-foreground">dhruvdaberao@gmail.com</p>
+                  <p className="text-sm text-muted-foreground truncate">dhruvdaberao@gmail.com</p>
                 </div>
               </a>
               
@@ -202,9 +209,9 @@ export function LoginPage() {
                 <div className="w-10 h-10 rounded-full bg-blue-600/10 text-blue-600 flex items-center justify-center shrink-0">
                   <LinkedinIcon className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <h3 className="font-medium text-foreground">LinkedIn</h3>
-                  <p className="text-sm text-muted-foreground">linkedin.com/in/dhruvdaberao</p>
+                  <p className="text-sm text-muted-foreground truncate">linkedin.com/in/dhruvdaberao</p>
                 </div>
               </a>
 
@@ -217,9 +224,9 @@ export function LoginPage() {
                 <div className="w-10 h-10 rounded-full bg-slate-900/10 text-slate-900 dark:bg-slate-100/10 dark:text-slate-100 flex items-center justify-center shrink-0">
                   <GithubIcon className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <h3 className="font-medium text-foreground">GitHub</h3>
-                  <p className="text-sm text-muted-foreground">github.com/dhruvdaberao</p>
+                  <p className="text-sm text-muted-foreground truncate">github.com/dhruvdaberao</p>
                 </div>
               </a>
             </div>
