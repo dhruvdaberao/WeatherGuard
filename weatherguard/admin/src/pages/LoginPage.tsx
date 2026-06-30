@@ -51,7 +51,7 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground relative overflow-hidden font-sans">
+    <div className="min-h-[100dvh] flex flex-col justify-between bg-background text-foreground relative overflow-hidden font-sans">
       {/* Subtle Background Gradients */}
       <div className="absolute top-4 right-4 z-50">
         <ThemeToggle />
@@ -64,17 +64,17 @@ export function LoginPage() {
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 py-4 sm:p-6 relative z-10 w-full max-w-md mx-auto">
-        <div className="w-full space-y-6 sm:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 py-2 sm:py-6 relative z-10 w-full max-w-md mx-auto">
+        <div className="w-full space-y-4 sm:space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
           
           {/* Header Section */}
-          <div className="text-center space-y-3 sm:space-y-4">
+          <div className="text-center space-y-2 sm:space-y-3">
             <div className="flex justify-center group">
-              <Logo className="text-slate-900 dark:text-slate-100 w-14 h-14 sm:w-20 sm:h-20 drop-shadow-md transition-transform duration-500 ease-in-out group-hover:scale-110 group-hover:-translate-y-1" />
+              <Logo className="text-slate-900 dark:text-slate-100 w-12 h-12 sm:w-16 sm:h-16 drop-shadow-md transition-transform duration-500 ease-in-out group-hover:scale-110 group-hover:-translate-y-1" />
             </div>
             
-            <div className="space-y-2 sm:space-y-3">
-              <h1 className="font-bubble text-3xl sm:text-5xl md:text-6xl font-bold tracking-normal flex flex-wrap items-center justify-center text-center">
+            <div className="space-y-1.5 sm:space-y-2">
+              <h1 className="font-bubble text-3xl sm:text-4xl md:text-5xl font-bold tracking-normal flex flex-wrap items-center justify-center text-center">
                 <span className="text-secondary drop-shadow-sm">WEATHER</span>
                 <span className="text-primary mx-1 sm:mx-1.5">-</span>
                 <span className="text-primary drop-shadow-sm">GUARD</span>
@@ -82,7 +82,7 @@ export function LoginPage() {
               <p className="text-xs sm:text-sm md:text-base text-muted-foreground font-medium leading-relaxed max-w-lg mx-auto px-2">
                 Enterprise-grade weather intelligence and automated alert workflows.
               </p>
-              <div className="text-[11px] sm:text-xs text-muted-foreground/80 leading-tight pt-0.5 sm:pt-1">
+              <div className="text-[11px] sm:text-xs text-muted-foreground/80 leading-tight pt-0.5">
                 <p>Assignment Project for AI47Labs.</p>
                 <p>Designed and developed by Dhruv Daberao.</p>
               </div>
@@ -90,12 +90,12 @@ export function LoginPage() {
           </div>
 
           {/* Action Buttons */}
-          <div className="space-y-2.5 sm:space-y-3.5 w-full pt-1">
+          <div className="space-y-2 sm:space-y-3 w-full pt-1">
             <GoogleLoginButton />
             <GitHubLoginButton />
             <Button 
               variant="outline" 
-              className="w-full relative h-12 flex items-center justify-center gap-3 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 hover:shadow-md transition-all duration-200 uppercase font-semibold tracking-wide text-xs sm:text-[13px]" 
+              className="w-full relative h-11 sm:h-12 flex items-center justify-center gap-3 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 hover:shadow-md transition-all duration-200 uppercase font-semibold tracking-wide text-xs sm:text-[13px]" 
               onClick={() => setIsAdminModalOpen(true)}
             >
               <Lock className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-muted-foreground" />
@@ -106,17 +106,17 @@ export function LoginPage() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full py-3 px-4 relative z-10 border-t border-border/40 bg-background/50 backdrop-blur-md">
-        <div className="max-w-md mx-auto flex flex-col items-center gap-2.5">
+      <footer className="w-full py-2.5 px-4 relative z-10 border-t border-border/40 bg-background/50 backdrop-blur-md shrink-0">
+        <div className="max-w-md mx-auto flex flex-col items-center gap-2">
           <Link 
             to="/hire-me" 
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-2xl bg-gradient-to-r from-[#229ED9] to-[#1d8ac0] text-white font-bold text-sm sm:text-base shadow-md shadow-[#229ED9]/20 hover:shadow-lg hover:shadow-[#229ED9]/30 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-[#229ED9] to-[#1d8ac0] text-white font-bold text-sm sm:text-base shadow-md shadow-[#229ED9]/20 hover:shadow-lg hover:shadow-[#229ED9]/30 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
           >
-            <Briefcase className="w-5 h-5 shrink-0" />
+            <Briefcase className="w-4 h-4 shrink-0" />
             <span>Why you should hire me?</span>
           </Link>
 
-          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-1 text-xs font-medium text-muted-foreground">
+          <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-1 text-[11px] sm:text-xs font-medium text-muted-foreground">
             <Link to="/terms" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Terms of Service</Link>
             <Link to="/privacy" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Privacy Policy</Link>
             <button onClick={() => setIsContactModalOpen(true)} className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Contact Me</button>
