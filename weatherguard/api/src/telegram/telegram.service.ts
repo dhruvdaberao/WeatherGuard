@@ -60,10 +60,22 @@ export class TelegramService implements OnModuleInit {
     }
 
     if (text === '/start' || text.startsWith('/start@')) {
-      await this.bot.sendMessage(
-        chatId,
-        'Welcome to WeatherGuard! To connect your account, please use the unique link provided in your web dashboard.'
-      );
+      const existingConnectedUser = await this.userModel.findOne({
+        telegramChatId: chatId.toString(),
+        telegramConnected: true,
+      });
+
+      if (existingConnectedUser) {
+        await this.bot.sendMessage(
+          chatId,
+          `Welcome back, ${existingConnectedUser.name}! Your account is already connected and active.`
+        );
+      } else {
+        await this.bot.sendMessage(
+          chatId,
+          'Welcome to WeatherGuard! To connect your account, please use the unique link provided in your web dashboard.'
+        );
+      }
     }
   }
 
@@ -75,6 +87,19 @@ export class TelegramService implements OnModuleInit {
       });
 
       if (!user) {
+        const existingConnectedUser = await this.userModel.findOne({
+          telegramChatId: chatId.toString(),
+          telegramConnected: true,
+        });
+
+        if (existingConnectedUser) {
+          await this.bot.sendMessage(
+            chatId,
+            `Your Telegram account (${existingConnectedUser.name}) is already connected and active! You are all set to receive automated weather alerts.`
+          );
+          return;
+        }
+
         await this.bot.sendMessage(
           chatId,
           'Invalid connection token. Please generate a new one from your dashboard.'
