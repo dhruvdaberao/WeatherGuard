@@ -101,26 +101,26 @@ export function LoginPage() {
               <Lock className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-muted-foreground" />
               <span>Admin Login</span>
             </Button>
-
-            <div className="pt-2">
-              <Link 
-                to="/hire-me" 
-                className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#229ED9] to-[#1d8ac0] text-white font-bold text-sm sm:text-base shadow-lg shadow-[#229ED9]/25 hover:shadow-xl hover:shadow-[#229ED9]/35 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
-              >
-                <Briefcase className="w-5 h-5 shrink-0" />
-                <span>Why you should hire me?</span>
-              </Link>
-            </div>
           </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="w-full py-3.5 px-4 relative z-10 border-t border-border/40 bg-background/50 backdrop-blur-md">
-        <div className="max-w-md mx-auto flex flex-wrap justify-center items-center gap-x-6 gap-y-1.5 text-xs font-medium text-muted-foreground">
-          <Link to="/terms" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Terms of Service</Link>
-          <Link to="/privacy" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Privacy Policy</Link>
-          <button onClick={() => setIsContactModalOpen(true)} className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Contact Me</button>
+      <footer className="w-full py-3 px-4 relative z-10 border-t border-border/40 bg-background/50 backdrop-blur-md">
+        <div className="max-w-md mx-auto flex flex-col items-center gap-2.5">
+          <Link 
+            to="/hire-me" 
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-2xl bg-gradient-to-r from-[#229ED9] to-[#1d8ac0] text-white font-bold text-sm sm:text-base shadow-md shadow-[#229ED9]/20 hover:shadow-lg hover:shadow-[#229ED9]/30 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
+          >
+            <Briefcase className="w-5 h-5 shrink-0" />
+            <span>Why you should hire me?</span>
+          </Link>
+
+          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-1 text-xs font-medium text-muted-foreground">
+            <Link to="/terms" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Terms of Service</Link>
+            <Link to="/privacy" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Privacy Policy</Link>
+            <button onClick={() => setIsContactModalOpen(true)} className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Contact Me</button>
+          </div>
         </div>
       </footer>
 
