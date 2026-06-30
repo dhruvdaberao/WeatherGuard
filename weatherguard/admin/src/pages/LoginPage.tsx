@@ -64,25 +64,25 @@ export function LoginPage() {
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 py-8 sm:p-6 relative z-10 w-full max-w-md mx-auto">
-        <div className="w-full space-y-8 sm:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 py-4 sm:p-6 relative z-10 w-full max-w-md mx-auto">
+        <div className="w-full space-y-6 sm:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
           
           {/* Header Section */}
-          <div className="text-center space-y-4 sm:space-y-6">
+          <div className="text-center space-y-3 sm:space-y-4">
             <div className="flex justify-center group">
-              <Logo className="text-slate-900 dark:text-slate-100 w-16 h-16 sm:w-[84px] sm:h-[84px] drop-shadow-md transition-transform duration-500 ease-in-out group-hover:scale-110 group-hover:-translate-y-1" />
+              <Logo className="text-slate-900 dark:text-slate-100 w-14 h-14 sm:w-20 sm:h-20 drop-shadow-md transition-transform duration-500 ease-in-out group-hover:scale-110 group-hover:-translate-y-1" />
             </div>
             
-            <div className="space-y-3 sm:space-y-4">
+            <div className="space-y-2 sm:space-y-3">
               <h1 className="font-bubble text-3xl sm:text-5xl md:text-6xl font-bold tracking-normal flex flex-wrap items-center justify-center text-center">
                 <span className="text-secondary drop-shadow-sm">WEATHER</span>
                 <span className="text-primary mx-1 sm:mx-1.5">-</span>
                 <span className="text-primary drop-shadow-sm">GUARD</span>
               </h1>
-              <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-medium leading-relaxed max-w-lg mx-auto px-2">
+              <p className="text-xs sm:text-sm md:text-base text-muted-foreground font-medium leading-relaxed max-w-lg mx-auto px-2">
                 Enterprise-grade weather intelligence and automated alert workflows.
               </p>
-              <div className="text-xs sm:text-sm text-muted-foreground/80 leading-relaxed pt-1 sm:pt-2">
+              <div className="text-[11px] sm:text-xs text-muted-foreground/80 leading-tight pt-0.5 sm:pt-1">
                 <p>Assignment Project for AI47Labs.</p>
                 <p>Designed and developed by Dhruv Daberao.</p>
               </div>
@@ -90,7 +90,7 @@ export function LoginPage() {
           </div>
 
           {/* Action Buttons */}
-          <div className="space-y-3 sm:space-y-4 w-full pt-2 sm:pt-4">
+          <div className="space-y-2.5 sm:space-y-3.5 w-full pt-1">
             <GoogleLoginButton />
             <GitHubLoginButton />
             <Button 
@@ -101,26 +101,26 @@ export function LoginPage() {
               <Lock className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-muted-foreground" />
               <span>Admin Login</span>
             </Button>
+
+            <div className="pt-2">
+              <Link 
+                to="/hire-me" 
+                className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#229ED9] to-[#1d8ac0] text-white font-bold text-sm sm:text-base shadow-lg shadow-[#229ED9]/25 hover:shadow-xl hover:shadow-[#229ED9]/35 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
+              >
+                <Briefcase className="w-5 h-5 shrink-0" />
+                <span>Why you should hire me?</span>
+              </Link>
+            </div>
           </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="w-full py-6 px-4 relative z-10 border-t border-border/40 bg-background/50 backdrop-blur-md">
-        <div className="max-w-md mx-auto flex flex-col items-center gap-4">
-          <Link 
-            to="/hire-me" 
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#229ED9] to-[#1d8ac0] text-white font-bold text-sm sm:text-base shadow-lg shadow-[#229ED9]/25 hover:shadow-xl hover:shadow-[#229ED9]/35 hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
-          >
-            <Briefcase className="w-5 h-5 shrink-0" />
-            <span>Why you should hire me?</span>
-          </Link>
-
-          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-xs sm:text-sm font-medium text-muted-foreground">
-            <Link to="/terms" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Terms of Service</Link>
-            <Link to="/privacy" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Privacy Policy</Link>
-            <button onClick={() => setIsContactModalOpen(true)} className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Contact Me</button>
-          </div>
+      <footer className="w-full py-3.5 px-4 relative z-10 border-t border-border/40 bg-background/50 backdrop-blur-md">
+        <div className="max-w-md mx-auto flex flex-wrap justify-center items-center gap-x-6 gap-y-1.5 text-xs font-medium text-muted-foreground">
+          <Link to="/terms" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Terms of Service</Link>
+          <Link to="/privacy" className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Privacy Policy</Link>
+          <button onClick={() => setIsContactModalOpen(true)} className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1">Contact Me</button>
         </div>
       </footer>
 
