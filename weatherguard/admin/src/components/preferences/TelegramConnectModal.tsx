@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../../services/api';
 import { Button } from '../ui/Button';
 import { TelegramLogo } from '../shared/TelegramLogo';
-import { X, Copy, Check } from 'lucide-react';
+import { X, Copy, Check, Send, Globe } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface TelegramConnectModalProps {
@@ -51,7 +51,10 @@ export function TelegramConnectModal({ isOpen, onClose }: TelegramConnectModalPr
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
       <div className="bg-card w-full max-w-md rounded-2xl border shadow-xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
         <div className="flex justify-between items-center p-6 border-b border-border/50">
-          <h2 className="text-xl font-bold tracking-tight">Connect Telegram</h2>
+          <div className="flex items-center gap-2.5">
+            <TelegramLogo className="w-6 h-6 shrink-0" />
+            <h2 className="text-xl font-bold tracking-tight">Connect Telegram</h2>
+          </div>
           <Button variant="ghost" size="sm" onClick={onClose} className="rounded-full w-8 h-8 p-0">
             <X className="w-4 h-4" />
           </Button>
@@ -80,7 +83,7 @@ export function TelegramConnectModal({ isOpen, onClose }: TelegramConnectModalPr
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 text-white bg-[#229ED9] hover:bg-[#1d8ac0] font-semibold text-xs sm:text-sm px-3 py-2.5 rounded-xl shadow transition-all active:scale-95"
                     >
-                      <TelegramLogo className="w-4 h-4 brightness-200" />
+                      <Send className="w-4 h-4" />
                       Open Telegram App
                     </a>
                     <a 
@@ -97,7 +100,7 @@ export function TelegramConnectModal({ isOpen, onClose }: TelegramConnectModalPr
                       }}
                       className="inline-flex items-center justify-center gap-2 text-[#229ED9] bg-[#229ED9]/10 hover:bg-[#229ED9]/20 font-semibold text-xs sm:text-sm px-3 py-2.5 rounded-xl border border-[#229ED9]/30 transition-all active:scale-95"
                     >
-                      <TelegramLogo className="w-4 h-4" />
+                      <Globe className="w-4 h-4" />
                       Open Telegram Web
                     </a>
                   </div>
