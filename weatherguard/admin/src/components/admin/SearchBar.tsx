@@ -1,6 +1,6 @@
 import { Search } from 'lucide-react';
 import { Input } from '../ui/Input';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 interface SearchBarProps {
   onSearch: (value: string) => void;
@@ -9,9 +9,15 @@ interface SearchBarProps {
 
 export function SearchBar({ onSearch, placeholder = 'Search users...' }: SearchBarProps) {
   const [value, setValue] = useState('');
+  const prevValueRef = useRef(value);
 
-  // Debounce search
+  // Debounce search only when input value actually changes
   useEffect(() => {
+    if (prevValueRef.current === value) {
+      return;
+    }
+    prevValueRef.current = value;
+
     const timeoutId = setTimeout(() => {
       onSearch(value);
     }, 300);

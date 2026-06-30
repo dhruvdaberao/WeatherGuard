@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useState, useCallback } from 'react';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { api } from '../services/api';
 import { UserTable } from '../components/admin/UserTable';
 import { SearchBar } from '../components/admin/SearchBar';
@@ -16,6 +16,11 @@ export function AdminUsersView({ title, description, statusEndpoint }: AdminUser
   const [page, setPage] = useState(1);
   const limit = 10;
 
+  const handleSearch = useCallback((val: string) => {
+    setSearch(val);
+    setPage(1);
+  }, []);
+
   const { data, isLoading } = useQuery({
     queryKey: ['admin-users', statusEndpoint, search, telegramFilter, page],
     queryFn: async () => {
@@ -23,6 +28,7 @@ export function AdminUsersView({ title, description, statusEndpoint }: AdminUser
       const res = await api.get(`${endpoint}?search=${search}&telegram=${telegramFilter}&page=${page}&limit=${limit}`);
       return res.data;
     },
+    placeholderData: keepPreviousData,
   });
 
   const totalPages = data ? Math.ceil(data.total / limit) : 1;
@@ -36,7 +42,7 @@ export function AdminUsersView({ title, description, statusEndpoint }: AdminUser
         </div>
         <div className="w-full flex flex-col sm:flex-row gap-3 max-w-3xl mx-auto items-center justify-between">
           <div className="w-full sm:flex-1">
-            <SearchBar onSearch={(val) => { setSearch(val); setPage(1); }} />
+            <SearchBar onSearch={handleSearch} />
           </div>
           <div className="flex items-center gap-1 bg-muted/60 p-1.5 rounded-2xl border border-border/60 w-full sm:w-auto justify-center shrink-0 shadow-sm">
             <button
