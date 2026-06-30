@@ -38,8 +38,8 @@ export class UsersService {
     status?: Status,
     search?: string,
     telegram?: string,
-    limit: number = 10,
-    page: number = 1
+    limit: number | string = 10,
+    page: number | string = 1
   ): Promise<{ data: User[], total: number }> {
     const query: any = {};
     if (status) query.status = status;
@@ -52,9 +52,12 @@ export class UsersService {
     if (telegram === 'connected') query.telegramConnected = true;
     if (telegram === 'unconnected') query.telegramConnected = { $ne: true };
     
-    const skip = (page - 1) * limit;
+    const pageNum = Math.max(1, parseInt(String(page), 10) || 1);
+    const limitNum = Math.max(1, parseInt(String(limit), 10) || 10);
+    const skip = (pageNum - 1) * limitNum;
+
     const [data, total] = await Promise.all([
-      this.userModel.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit).exec(),
+      this.userModel.find(query).sort({ createdAt: -1 }).skip(skip).limit(limitNum).exec(),
       this.userModel.countDocuments(query).exec()
     ]);
     

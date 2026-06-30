@@ -61,15 +61,21 @@ export function AdminUsersView({ title, description, statusEndpoint }: AdminUser
           <div className="flex gap-2">
             <button
               disabled={page === 1}
-              onClick={() => setPage(p => p - 1)}
-              className="px-3 py-1 text-sm border rounded-md disabled:opacity-50 hover:bg-muted"
+              onClick={() => {
+                setPage(p => Math.max(1, p - 1));
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="px-4 py-1.5 text-sm font-medium border border-border rounded-xl disabled:opacity-40 hover:bg-muted transition-all active:scale-95 shadow-sm"
             >
               Previous
             </button>
             <button
               disabled={page >= totalPages}
-              onClick={() => setPage(p => p + 1)}
-              className="px-3 py-1 text-sm border rounded-md disabled:opacity-50 hover:bg-muted"
+              onClick={() => {
+                setPage(p => p + 1);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="px-4 py-1.5 text-sm font-medium border border-border rounded-xl disabled:opacity-40 hover:bg-muted transition-all active:scale-95 shadow-sm"
             >
               Next
             </button>
