@@ -2,7 +2,7 @@ import type { User } from '../../types/auth';
 import { Status } from '../../types/auth';
 import { StatusBadge } from './StatusBadge';
 import { Button } from '../ui/Button';
-import { Check, X, SearchX, CheckCircle2, XCircle } from 'lucide-react';
+import { Check, X, SearchX, CheckCircle2, XCircle, MoveHorizontal, ArrowRight } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../../services/api';
 import toast from 'react-hot-toast';
@@ -51,9 +51,12 @@ export function UserTable({ users, isLoading }: UserTableProps) {
 
   return (
     <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
-      <div className="flex sm:hidden items-center justify-between px-3.5 py-2 bg-primary/10 text-primary text-[11px] font-bold border-b border-primary/20">
-        <span>👈 Swipe table horizontally to view Status & Actions 👉</span>
-        <span className="animate-pulse">↔️</span>
+      <div className="flex sm:hidden items-center justify-between px-4 py-2 bg-muted/60 text-muted-foreground text-xs font-semibold border-b border-border/60">
+        <div className="flex items-center gap-2">
+          <MoveHorizontal className="w-4 h-4 text-primary shrink-0" />
+          <span>Scroll horizontally for table columns</span>
+        </div>
+        <ArrowRight className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left">
