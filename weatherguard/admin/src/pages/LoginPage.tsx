@@ -70,7 +70,7 @@ export function LoginPage() {
           {/* Header Section */}
           <div className="text-center space-y-2 sm:space-y-3">
             <div className="flex justify-center group">
-              <Logo className="text-slate-900 dark:text-slate-100 w-12 h-12 sm:w-16 sm:h-16 drop-shadow-md transition-transform duration-500 ease-in-out group-hover:scale-110 group-hover:-translate-y-1" />
+              <Logo className="text-slate-900 dark:text-slate-100 w-16 h-16 sm:w-20 sm:h-20 drop-shadow-md transition-transform duration-500 ease-in-out group-hover:scale-110 group-hover:-translate-y-1" />
             </div>
             
             <div className="space-y-1.5 sm:space-y-2">
