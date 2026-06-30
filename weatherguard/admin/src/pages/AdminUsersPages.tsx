@@ -34,19 +34,45 @@ export function AdminUsersView({ title, description, statusEndpoint }: AdminUser
           <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
           <p className="text-muted-foreground mt-1">{description}</p>
         </div>
-        <div className="w-full flex gap-4 max-w-2xl mx-auto">
-          <div className="flex-1">
+        <div className="w-full flex flex-col sm:flex-row gap-3 max-w-3xl mx-auto items-center justify-between">
+          <div className="w-full sm:flex-1">
             <SearchBar onSearch={(val) => { setSearch(val); setPage(1); }} />
           </div>
-          <select 
-            value={telegramFilter}
-            onChange={(e) => { setTelegramFilter(e.target.value); setPage(1); }}
-            className="rounded-full border border-input bg-background px-4 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-          >
-            <option value="all">All Telegram</option>
-            <option value="connected">Connected</option>
-            <option value="unconnected">Unconnected</option>
-          </select>
+          <div className="flex items-center gap-1 bg-muted/60 p-1.5 rounded-2xl border border-border/60 w-full sm:w-auto justify-center shrink-0 shadow-sm">
+            <button
+              type="button"
+              onClick={() => { setTelegramFilter('all'); setPage(1); }}
+              className={`flex-1 sm:flex-initial px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                telegramFilter === 'all'
+                  ? 'bg-background text-foreground shadow scale-[1.02]'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-background/40'
+              }`}
+            >
+              All Telegram
+            </button>
+            <button
+              type="button"
+              onClick={() => { setTelegramFilter('connected'); setPage(1); }}
+              className={`flex-1 sm:flex-initial px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                telegramFilter === 'connected'
+                  ? 'bg-[#229ED9] text-white shadow scale-[1.02]'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-background/40'
+              }`}
+            >
+              Connected
+            </button>
+            <button
+              type="button"
+              onClick={() => { setTelegramFilter('unconnected'); setPage(1); }}
+              className={`flex-1 sm:flex-initial px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                telegramFilter === 'unconnected'
+                  ? 'bg-amber-500 text-white shadow scale-[1.02]'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-background/40'
+              }`}
+            >
+              Unconnected
+            </button>
+          </div>
         </div>
       </div>
 
