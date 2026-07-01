@@ -77,7 +77,12 @@ export class WeatherService {
         case WeatherPreference.SEVERE_WEATHER:
           if (conditionStr.includes('tornado') || conditionStr.includes('squall')) matched.push(pref);
           break;
-        // UV_INDEX is skipped in 2.5/weather
+        case WeatherPreference.UV_INDEX:
+          // High UV index warning during clear sunny daytime conditions
+          const isDaytime = weatherData.dt >= (weatherData.sys?.sunrise || 0) && weatherData.dt <= (weatherData.sys?.sunset || Infinity);
+          const isClearSky = conditionStr.includes('clear') || (weatherData.clouds?.all !== undefined && weatherData.clouds.all <= 25);
+          if (isDaytime && isClearSky && temp >= 26) matched.push(pref);
+          break;
       }
     }
 
@@ -102,6 +107,7 @@ export class WeatherService {
         case WeatherPreference.HIGH_WIND: return `💨 High winds expected.`;
         case WeatherPreference.HUMIDITY: return `💧 Very high humidity.`;
         case WeatherPreference.SEVERE_WEATHER: return `⚠️ Severe weather alert!`;
+        case WeatherPreference.UV_INDEX: return `☀️ High UV Index warning (Clear bright sunlight).`;
         default: return '';
       }
     }).filter(desc => desc !== '');
@@ -118,8 +124,8 @@ export class WeatherService {
     let advice = '';
     if (matchedAlerts.includes(WeatherPreference.RAIN) || matchedAlerts.includes(WeatherPreference.THUNDERSTORM)) {
       advice = `Stay hydrated and carry an umbrella.`;
-    } else if (matchedAlerts.includes(WeatherPreference.HIGH_TEMPERATURE)) {
-      advice = `Stay hydrated and avoid direct sun.`;
+    } else if (matchedAlerts.includes(WeatherPreference.HIGH_TEMPERATURE) || matchedAlerts.includes(WeatherPreference.UV_INDEX)) {
+      advice = `Apply sunscreen, wear sunglasses, and avoid prolonged sun exposure.`;
     } else if (matchedAlerts.includes(WeatherPreference.LOW_TEMPERATURE) || matchedAlerts.includes(WeatherPreference.SNOW)) {
       advice = `Bundle up and stay warm.`;
     } else if (matchedAlerts.includes(WeatherPreference.HIGH_WIND) || matchedAlerts.includes(WeatherPreference.SEVERE_WEATHER)) {
