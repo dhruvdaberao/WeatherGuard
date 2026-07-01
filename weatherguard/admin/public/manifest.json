@@ -1,11 +1,11 @@
 {
-  "name": "WeatherGuard Admin",
-  "short_name": "WeatherGuard",
+  "name": "Weather-Guard",
+  "short_name": "Weather-Guard",
   "description": "Enterprise-grade weather intelligence and automated alert workflows.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
   "icons": [
     {
       "src": "/favicon.svg",
