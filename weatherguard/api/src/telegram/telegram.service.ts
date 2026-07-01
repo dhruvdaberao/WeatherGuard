@@ -73,7 +73,7 @@ export class TelegramService implements OnModuleInit {
       } else {
         await this.bot.sendMessage(
           chatId,
-          'Welcome to WeatherGuard! To connect your account, please use the unique link provided in your web dashboard.'
+          'Welcome to WeatherGuard! To connect your account:\n\n1️⃣ Go to your WeatherGuard Web Dashboard\n2️⃣ Click "Copy Code" under Step 1\n3️⃣ Paste the copied command (/start WG_XXXXXX) directly into this chat and hit Send!'
         );
       }
     }

@@ -72,18 +72,38 @@ export function TelegramConnectModal({ isOpen, onClose }: TelegramConnectModalPr
             </div>
           ) : generateTokenMutation.data && (
             <>
-              <div className="space-y-4">
+              <div className="space-y-5">
                 <div>
-                  <div className="text-sm font-semibold text-primary mb-1">STEP 1</div>
-                  <p className="text-sm text-foreground">Choose your platform to open the bot chat:</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-3">
+                  <div className="text-xs font-bold text-[#229ED9] uppercase tracking-wider mb-1.5">STEP 1: COPY LINKING COMMAND</div>
+                  <p className="text-sm text-foreground">Copy this exact command to link your account:</p>
+                  
+                  <div className="mt-2.5 flex items-center gap-2 p-3 bg-muted/80 rounded-xl border border-border shadow-inner">
+                    <code className="flex-1 text-sm font-mono text-foreground font-bold truncate">
+                      /start {generateTokenMutation.data.token}
+                    </code>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={handleCopy} 
+                      className="h-9 px-3.5 gap-1.5 font-semibold bg-background hover:bg-muted text-xs shadow-sm shrink-0"
+                    >
+                      {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 text-[#229ED9]" />}
+                      {copied ? 'Copied!' : 'Copy Code'}
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="text-xs font-bold text-[#229ED9] uppercase tracking-wider mb-1.5">STEP 2: OPEN TELEGRAM & PASTE</div>
+                  <p className="text-sm text-foreground">Open your preferred Telegram app, paste the command into the chat, and press Send:</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
                     <a 
                       href={`https://t.me/${generateTokenMutation.data.botUsername}?start=${generateTokenMutation.data.token}`} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 text-white bg-[#229ED9] hover:bg-[#1d8ac0] font-semibold text-xs sm:text-sm px-3 py-2.5 rounded-xl shadow transition-all active:scale-95"
+                      className="inline-flex items-center justify-center gap-2 text-white bg-[#229ED9] hover:bg-[#1d8ac0] font-bold text-xs sm:text-sm h-11 px-4 rounded-xl shadow transition-all active:scale-95"
                     >
-                      <Send className="w-4 h-4" />
+                      <Send className="w-4 h-4 shrink-0" />
                       Open Telegram App
                     </a>
                     <a 
@@ -95,28 +115,14 @@ export function TelegramConnectModal({ isOpen, onClose }: TelegramConnectModalPr
                           navigator.clipboard.writeText(`/start ${generateTokenMutation.data.token}`);
                           setCopied(true);
                           setTimeout(() => setCopied(false), 2000);
-                          toast.success('Command copied! Just Ctrl+V / Paste in Telegram Web');
+                          toast.success('Command auto-copied! Just Ctrl+V / Paste in Telegram Web');
                         }
                       }}
-                      className="inline-flex items-center justify-center gap-2 text-[#229ED9] bg-[#229ED9]/10 hover:bg-[#229ED9]/20 font-semibold text-xs sm:text-sm px-3 py-2.5 rounded-xl border border-[#229ED9]/30 transition-all active:scale-95"
+                      className="inline-flex items-center justify-center gap-2 text-[#229ED9] bg-[#229ED9]/10 hover:bg-[#229ED9]/20 font-bold text-xs sm:text-sm h-11 px-4 rounded-xl border border-[#229ED9]/30 transition-all active:scale-95"
                     >
-                      <Globe className="w-4 h-4" />
+                      <Globe className="w-4 h-4 shrink-0" />
                       Open Telegram Web
                     </a>
-                  </div>
-                </div>
-
-                <div>
-                  <div className="text-sm font-semibold text-primary mb-1 mt-4">STEP 2</div>
-                  <p className="text-sm text-foreground">Send the following command to the bot to link your account:</p>
-                  
-                  <div className="mt-3 flex items-center gap-2 p-3 bg-muted rounded-lg border">
-                    <code className="flex-1 text-sm font-mono text-foreground font-semibold">
-                      /start {generateTokenMutation.data.token}
-                    </code>
-                    <Button variant="ghost" size="sm" onClick={handleCopy} className="h-8 px-2 text-muted-foreground hover:text-foreground">
-                      {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-                    </Button>
                   </div>
                 </div>
               </div>
