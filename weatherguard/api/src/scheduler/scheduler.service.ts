@@ -37,14 +37,14 @@ export class SchedulerService {
 
         // Anti-spam logic:
         // Only send if matched alerts are different from lastAlertTypes
-        // OR if lastAlertSentAt is older than ~7.5 hours (3 times a day).
+        // OR if lastAlertSentAt is older than ~3.5 hours (6 times a day / every 4 hours).
         const prevTypes = user.lastAlertTypes || [];
         const hasNewAlerts = matchedPrefs.some(p => !prevTypes.includes(p));
         const hoursSinceLastAlert = user.lastAlertSentAt 
           ? (new Date().getTime() - new Date(user.lastAlertSentAt).getTime()) / (1000 * 60 * 60)
           : Infinity;
 
-        if (hasNewAlerts || hoursSinceLastAlert >= 7.5) {
+        if (hasNewAlerts || hoursSinceLastAlert >= 3.5) {
           const message = this.weatherService.generateAlertMessage(user.city, matchedPrefs, weatherData);
           await this.telegramService.sendMessage(user.telegramChatId, message);
           
