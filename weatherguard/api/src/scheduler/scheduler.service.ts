@@ -34,8 +34,6 @@ export class SchedulerService {
         if (!weatherData) continue;
 
         const matchedPrefs = this.weatherService.matchPreferences(weatherData, user.weatherPreferences || []);
-        
-        if (matchedPrefs.length === 0) continue;
 
         // If user explicitly toggled off automated scheduled alerts, skip routine cron scheduling
         if (user.autoAlertsEnabled === false) continue;
@@ -46,11 +44,14 @@ export class SchedulerService {
         const cooldownHours = Math.max(1, (24 / targetFrequency) - 0.5);
 
         const prevTypes = user.lastAlertTypes || [];
-        const hasNewAlerts = matchedPrefs.some(p => !prevTypes.includes(p));
+        const hasNewAlerts = matchedPrefs.length > 0 && matchedPrefs.some((p: string) => !prevTypes.includes(p));
         const hoursSinceLastAlert = user.lastAlertSentAt 
           ? (new Date().getTime() - new Date(user.lastAlertSentAt).getTime()) / (1000 * 60 * 60)
           : Infinity;
 
+        // Dispatch notification if:
+        // 1. There is an urgent new severe weather condition (hasNewAlerts)
+        // 2. It is time for their routine scheduled report based on alertsPerDay (hoursSinceLastAlert >= cooldownHours)
         if (hasNewAlerts || hoursSinceLastAlert >= cooldownHours) {
           const alertType = hasNewAlerts ? 'URGENT' : 'SCHEDULED';
           const message = this.weatherService.generateAlertMessage(user.city, matchedPrefs, weatherData, alertType);
@@ -58,7 +59,7 @@ export class SchedulerService {
           
           await this.usersService.updateAlertHistory(user._id.toString(), matchedPrefs);
           sentCount++;
-          this.logger.log(`Sent weather alert to user ${user.email}`);
+          this.logger.log(`Sent ${alertType} weather dispatch to user ${user.email} (${user.city})`);
         }
       } catch (error) {
         this.logger.error(`Failed to process user ${user.email} for weather alerts: ${error.message}`);
