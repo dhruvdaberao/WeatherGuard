@@ -89,7 +89,12 @@ PICT Pune
 - **Interactive On-Demand Telemetry**: Users can send simple chat messages (`hi`, `status`, `/weather`) to the Telegram bot at any time to receive instantaneous, real-time atmospheric conditions and actionable health guidance.
 - **Automated Weather Monitoring**: Scheduled background execution checking weather states across all configured user cities based on their custom daily interval.
 - **Rich Executive Telegram Notifications**: High-contrast, beautifully structured markdown dispatches featuring dynamic category emojis and telemetry blocks.
-- **Manual Test Alerts**: Interactive UI triggers allowing users and administrators to test end-to-end notification delivery on demand.
+- **Native Telegram Bot Command Menu**: Built-in slash command directory registered directly with Telegram Bot API:
+  - `/start WG_XXXXXX` — Connect your WeatherGuard account
+  - `/status` — View connection status & current conditions
+  - `/test` — Receive a test weather notification
+  - `/help` — Show available commands & platform directory
+  - `/disconnect` — Safely unlink your Telegram account directly via chat
 - **Anti-Spam & Urgent Override Engine**: Smart frequency-gating that suppresses repetitive routine dispatches while guaranteeing immediate delivery whenever new severe weather conditions erupt.
 
 ---

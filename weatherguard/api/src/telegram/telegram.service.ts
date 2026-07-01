@@ -33,6 +33,14 @@ export class TelegramService implements OnModuleInit {
     if (!this.bot) return;
     await this.bot.setWebHook(url);
     this.logger.log(`Webhook set to ${url}`);
+    
+    await this.bot.setMyCommands([
+      { command: 'start', description: 'Connect your WeatherGuard account' },
+      { command: 'status', description: 'View connection status & current conditions' },
+      { command: 'test', description: 'Receive a test weather notification' },
+      { command: 'help', description: 'Show available commands' },
+      { command: 'disconnect', description: 'Disconnect your Telegram account' },
+    ]).catch((err: any) => this.logger.warn('Failed to register Telegram bot commands: ' + err?.message));
   }
 
   async getWebhookInfo() {
@@ -81,12 +89,62 @@ export class TelegramService implements OnModuleInit {
       return;
     }
 
-    // Handle interactive on-demand weather status requests ("hi", "status", "/weather", etc.)
+    const cleanCmd = text.trim().toLowerCase();
+
+    // Handle /help command
+    if (cleanCmd === '/help' || cleanCmd === '/help@weatherguard_bot') {
+      await this.sendMessage(
+        chatId.toString(),
+        `🤖 *WeatherGuard Command Directory*\n\nHere are all the commands you can use:\n\n• \`/start WG_XXXXXX\` — Connect your WeatherGuard account\n• \`/status\` — View connection status & current conditions\n• \`/test\` — Receive a test weather notification\n• \`/help\` — Show available commands\n• \`/disconnect\` — Disconnect your Telegram account\n\n💡 *Tip:* You can also type \`hi\`, \`hello\`, or \`weather\` anytime for an instant condition report!`
+      );
+      return;
+    }
+
     const existingConnectedUser = await this.userModel.findOne({
       telegramChatId: chatId.toString(),
       telegramConnected: true,
     });
 
+    // Handle /disconnect command
+    if (cleanCmd === '/disconnect' || cleanCmd === '/disconnect@weatherguard_bot') {
+      if (!existingConnectedUser) {
+        await this.sendMessage(
+          chatId.toString(),
+          '⚠️ *Account Not Connected*\n\nYour Telegram account is not currently linked to any active WeatherGuard profile.'
+        );
+        return;
+      }
+      await this.userModel.updateOne(
+        { _id: existingConnectedUser._id },
+        { $unset: { telegramChatId: "", telegramConnectedAt: "" }, $set: { telegramConnected: false } }
+      );
+      await this.sendMessage(
+        chatId.toString(),
+        `🛑 *Telegram Account Disconnected*\n\nYour profile (**${existingConnectedUser.email}**) has been unlinked safely. Automated alerts are now paused for this chat.\n\nTo reconnect at any time, visit your Web Dashboard and copy a fresh code!`
+      );
+      this.logger.log(`User ${existingConnectedUser.email} disconnected via /disconnect command`);
+      return;
+    }
+
+    // Handle /test command
+    if (cleanCmd === '/test' || cleanCmd === '/test@weatherguard_bot') {
+      if (!existingConnectedUser) {
+        await this.sendMessage(
+          chatId.toString(),
+          '⚠️ *Account Not Connected*\n\nPlease link your account using `/start WG_XXXXXX` before requesting a test notification.'
+        );
+        return;
+      }
+      const city = existingConnectedUser.city || 'Pune';
+      const weatherData = await this.weatherService.fetchWeather(city);
+      const matchedPrefs = existingConnectedUser.weatherPreferences || [];
+      const message = this.weatherService.generateAlertMessage(city, matchedPrefs, weatherData || {}, 'TEST');
+      await this.sendMessage(chatId.toString(), message);
+      this.logger.log(`Manual /test alert dispatched to ${existingConnectedUser.email}`);
+      return;
+    }
+
+    // Handle interactive on-demand weather status requests ("/status", "hi", "/weather", etc.)
     if (existingConnectedUser) {
       const city = existingConnectedUser.city || 'Pune';
       this.logger.log(`On-demand weather request from ${existingConnectedUser.email} (${city})`);
