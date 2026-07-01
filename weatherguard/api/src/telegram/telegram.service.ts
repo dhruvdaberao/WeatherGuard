@@ -123,9 +123,9 @@ export class TelegramService implements OnModuleInit {
         });
 
         if (existingConnectedUser) {
-          await this.bot.sendMessage(
-            chatId,
-            `Your Telegram account (${existingConnectedUser.name}) is already connected and active! You are all set to receive automated weather alerts.`
+          await this.sendMessage(
+            chatId.toString(),
+            `✅ *Account Already Connected!*\n\nWelcome back, **${existingConnectedUser.name}**! Your Telegram account is already linked and active.\n\nYou do not need to re-send your connection token. Simply type \`hi\`, \`status\`, or \`/weather\` right here whenever you want an instant live weather report!`
           );
           return;
         }
