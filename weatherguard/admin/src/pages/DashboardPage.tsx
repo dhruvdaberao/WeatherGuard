@@ -53,16 +53,24 @@ export function DashboardPage() {
   const [preferences, setPreferences] = useState<WeatherPreference[]>(
     normalizePreferences(user?.weatherPreferences as any)
   );
+  const [autoAlertsEnabled, setAutoAlertsEnabled] = useState<boolean>(
+    user?.autoAlertsEnabled !== undefined ? user.autoAlertsEnabled : true
+  );
+  const [alertsPerDay, setAlertsPerDay] = useState<number>(
+    user?.alertsPerDay || 6
+  );
 
   useEffect(() => {
     if (user && !isEditing) {
       setCity(user.city || '');
       setPreferences(normalizePreferences(user.weatherPreferences as any));
+      setAutoAlertsEnabled(user.autoAlertsEnabled !== undefined ? user.autoAlertsEnabled : true);
+      setAlertsPerDay(user.alertsPerDay || 6);
     }
   }, [user, isEditing]);
 
   const mutation = useMutation({
-    mutationFn: async (data: { city: string; weatherPreferences: WeatherPreference[] }) => {
+    mutationFn: async (data: { city: string; weatherPreferences: WeatherPreference[]; autoAlertsEnabled: boolean; alertsPerDay: number }) => {
       const response = await api.patch('/users/preferences', data);
       return response.data;
     },
@@ -81,7 +89,7 @@ export function DashboardPage() {
   });
 
   const handleSave = () => {
-    mutation.mutate({ city, weatherPreferences: preferences });
+    mutation.mutate({ city, weatherPreferences: preferences, autoAlertsEnabled, alertsPerDay });
   };
 
   const disconnectMutation = useMutation({
@@ -170,7 +178,7 @@ export function DashboardPage() {
                       <span className="font-semibold text-sm text-muted-foreground">Not set</span>
                     )}
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between py-4">
+                  <div className="flex flex-col sm:flex-row sm:justify-between py-4 border-b border-border/50">
                     <span className="text-muted-foreground font-medium mb-3 sm:mb-0">Alert Types</span>
                     <div className="flex flex-wrap gap-2 sm:justify-end">
                       {user.weatherPreferences?.length ? (
@@ -184,11 +192,67 @@ export function DashboardPage() {
                       )}
                     </div>
                   </div>
+                  <div className="flex flex-col sm:flex-row sm:justify-between py-4">
+                    <span className="text-muted-foreground font-medium mb-1 sm:mb-0">Automated Alerts</span>
+                    <div className="flex items-center gap-2 sm:justify-end">
+                      {user.autoAlertsEnabled !== false ? (
+                        <span className="px-3 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full border border-emerald-500/20 shadow-sm">
+                          Active ({user.alertsPerDay || 6}x daily / Every {Math.round(24 / (user.alertsPerDay || 6))}h)
+                        </span>
+                      ) : (
+                        <span className="px-3 py-1 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-bold rounded-full border border-amber-500/20 shadow-sm">
+                          Paused (Interactive Only)
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <div className="space-y-8 animate-in fade-in duration-300">
                   <CitySelector value={city} onChange={setCity} />
                   <WeatherPreferenceSelector selected={preferences} onChange={setPreferences} />
+                  
+                  <div className="p-5 rounded-2xl bg-muted/30 border border-border/60 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="font-semibold text-sm text-foreground">Automated Scheduled Alerts</h4>
+                        <p className="text-xs text-muted-foreground">Receive regular automated updates delivered directly by our cloud scheduler.</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setAutoAlertsEnabled(!autoAlertsEnabled)}
+                        className={`w-12 h-6 flex items-center rounded-full p-1 duration-300 transition-colors shrink-0 ml-4 ${autoAlertsEnabled ? 'bg-primary' : 'bg-muted-foreground/30'}`}
+                      >
+                        <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${autoAlertsEnabled ? 'translate-x-6' : 'translate-x-0'}`} />
+                      </button>
+                    </div>
+
+                    {autoAlertsEnabled && (
+                      <div className="pt-3 border-t border-border/50 space-y-3 animate-in fade-in duration-300">
+                        <div className="flex justify-between items-center text-xs font-medium text-muted-foreground">
+                          <span>Daily Frequency: <strong className="text-foreground">{alertsPerDay} alert{alertsPerDay > 1 ? 's' : ''} / day</strong></span>
+                          <span>Interval: Every <strong className="text-foreground">{Math.round(24 / alertsPerDay)} hours</strong></span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {[1, 2, 3, 4, 6].map((num) => (
+                            <button
+                              key={num}
+                              type="button"
+                              onClick={() => setAlertsPerDay(num)}
+                              className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200 ${
+                                alertsPerDay === num
+                                  ? 'bg-primary text-primary-foreground border-primary shadow-sm'
+                                  : 'bg-background hover:bg-muted text-muted-foreground border-border'
+                              }`}
+                            >
+                              {num}x Daily ({Math.round(24 / num)}h)
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
                   <div className="flex justify-end pt-4 border-t border-border/50">
                     <Button onClick={handleSave} disabled={mutation.isPending} className="gap-2 h-11 px-8 shadow-md">
                       <Save className="w-4 h-4" />

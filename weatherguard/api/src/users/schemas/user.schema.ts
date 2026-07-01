@@ -50,6 +50,12 @@ export class User {
   @Prop({ type: [String], enum: WeatherPreference, default: [] })
   weatherPreferences: WeatherPreference[];
 
+  @Prop({ type: Boolean, default: true })
+  autoAlertsEnabled: boolean;
+
+  @Prop({ type: Number, default: 6 })
+  alertsPerDay: number;
+
   @Prop()
   lastAlertSentAt: Date;
 

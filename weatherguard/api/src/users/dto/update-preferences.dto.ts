@@ -1,4 +1,4 @@
-import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsEnum, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
 import { WeatherPreference } from '../enums/weather-preference.enum';
 
 export class UpdatePreferencesDto {
@@ -9,4 +9,14 @@ export class UpdatePreferencesDto {
   @IsOptional()
   @IsEnum(WeatherPreference, { each: true })
   weatherPreferences?: WeatherPreference[];
+
+  @IsOptional()
+  @IsBoolean()
+  autoAlertsEnabled?: boolean;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
+  @Max(6)
+  alertsPerDay?: number;
 }

@@ -22,6 +22,8 @@ export interface User {
   status: Status;
   city?: string;
   weatherPreferences?: string[];
+  autoAlertsEnabled?: boolean;
+  alertsPerDay?: number;
   createdAt: string;
   updatedAt: string;
 }

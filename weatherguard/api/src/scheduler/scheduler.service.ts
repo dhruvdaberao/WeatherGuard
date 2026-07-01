@@ -35,16 +35,21 @@ export class SchedulerService {
         
         if (matchedPrefs.length === 0) continue;
 
-        // Anti-spam logic:
-        // Only send if matched alerts are different from lastAlertTypes
-        // OR if lastAlertSentAt is older than ~3.5 hours (6 times a day / every 4 hours).
+        // If user explicitly toggled off automated scheduled alerts, skip routine cron scheduling
+        if (user.autoAlertsEnabled === false) continue;
+
+        // Anti-spam & custom schedule frequency logic:
+        // Cooldown hours dynamically calculated based on user's alertsPerDay preference (defaults to 6 times daily / ~4 hours)
+        const targetFrequency = user.alertsPerDay || 6;
+        const cooldownHours = Math.max(1, (24 / targetFrequency) - 0.5);
+
         const prevTypes = user.lastAlertTypes || [];
         const hasNewAlerts = matchedPrefs.some(p => !prevTypes.includes(p));
         const hoursSinceLastAlert = user.lastAlertSentAt 
           ? (new Date().getTime() - new Date(user.lastAlertSentAt).getTime()) / (1000 * 60 * 60)
           : Infinity;
 
-        if (hasNewAlerts || hoursSinceLastAlert >= 3.5) {
+        if (hasNewAlerts || hoursSinceLastAlert >= cooldownHours) {
           const alertType = hasNewAlerts ? 'URGENT' : 'SCHEDULED';
           const message = this.weatherService.generateAlertMessage(user.city, matchedPrefs, weatherData, alertType);
           await this.telegramService.sendMessage(user.telegramChatId, message);
