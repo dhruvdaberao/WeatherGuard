@@ -44,6 +44,9 @@ export class User {
   @Prop()
   telegramConnectedAt: Date;
 
+  @Prop({ type: Boolean, default: false })
+  hasEverConnectedTelegram: boolean;
+
   @Prop()
   city: string;
 

@@ -155,13 +155,16 @@ export class TelegramService implements OnModuleInit {
         { $unset: { telegramChatId: "", telegramConnectedAt: "" }, $set: { telegramConnected: false } }
       );
 
+      const isReconnecting = user.hasEverConnectedTelegram === true;
+
       await this.userModel.updateOne(
         { _id: user._id },
         { 
           $set: {
             telegramChatId: chatId.toString(),
             telegramConnected: true,
-            telegramConnectedAt: new Date()
+            telegramConnectedAt: new Date(),
+            hasEverConnectedTelegram: true
           },
           $unset: {
             telegramConnectionToken: "",
@@ -170,13 +173,19 @@ export class TelegramService implements OnModuleInit {
         }
       );
 
-      await this.bot.sendMessage(
-        chatId,
-        `🎉 *Welcome to WeatherGuard, ${user.name}!* \n\nYour Telegram account has been connected successfully. You will now receive automated weather alerts.`,
-        { parse_mode: 'Markdown' }
-      );
+      if (isReconnecting) {
+        await this.sendMessage(
+          chatId.toString(),
+          `🔄 *Telegram Successfully Reconnected!*\n\nWelcome back, **${user.name}**! Your account is once again linked and active.\n\n• 🛡️ **Automated Alerts:** Active based on your saved schedule.\n• 💬 **Interactive Chat:** Type \`hi\`, \`status\`, or \`/weather\` anytime for instant updates!`
+        );
+      } else {
+        await this.sendMessage(
+          chatId.toString(),
+          `🎉 *Welcome to WeatherGuard, ${user.name}!*\n\nYour Telegram account has been connected successfully!\n\n• 🛡️ **Automated Alerts:** Active based on your saved schedule.\n• 💬 **Interactive Chat:** Type \`hi\`, \`status\`, or \`/weather\` anytime for instant updates!`
+        );
+      }
       
-      this.logger.log(`User ${user.email} connected to Telegram with ChatID ${chatId}`);
+      this.logger.log(`User ${user.email} ${isReconnecting ? 'reconnected' : 'connected'} to Telegram with ChatID ${chatId}`);
     } catch (error) {
       this.logger.error('Error connecting Telegram account', error);
       await this.bot.sendMessage(chatId, 'An error occurred while connecting your account. Please try again.');
