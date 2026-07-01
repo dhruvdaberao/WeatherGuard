@@ -142,7 +142,8 @@ export class TelegramService implements OnModuleInit {
 
       await this.bot.sendMessage(
         chatId,
-        `Welcome to WeatherGuard, ${user.name}! \n\nYour Telegram account has been connected successfully. You will now receive automated weather alerts.`,
+        `🎉 *Welcome to WeatherGuard, ${user.name}!* \n\nYour Telegram account has been connected successfully. You will now receive automated weather alerts.`,
+        { parse_mode: 'Markdown' }
       );
       
       this.logger.log(`User ${user.email} connected to Telegram with ChatID ${chatId}`);
@@ -158,9 +159,14 @@ export class TelegramService implements OnModuleInit {
       return;
     }
     try {
-      await this.bot.sendMessage(chatId, message);
+      await this.bot.sendMessage(chatId, message, { parse_mode: 'Markdown' });
     } catch (error) {
-      this.logger.error(`Failed to send telegram message to ${chatId}: ${error.message}`);
+      this.logger.warn(`Markdown parse failed for ${chatId}, retrying without formatting: ${error.message}`);
+      try {
+        await this.bot.sendMessage(chatId, message.replace(/\*/g, ''));
+      } catch (err) {
+        this.logger.error(`Failed to send telegram message to ${chatId}: ${err.message}`);
+      }
     }
   }
 }
