@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { UsersService } from '../users/users.service';
 import { WeatherService } from '../weather/weather.service';
 import { TelegramService } from '../telegram/telegram.service';
@@ -14,6 +15,7 @@ export class SchedulerService {
     private telegramService: TelegramService,
   ) {}
 
+  @Cron(CronExpression.EVERY_HOUR)
   async handleHourlyWeatherAlerts() {
     this.logger.log('Starting hourly weather alerts check...');
     
