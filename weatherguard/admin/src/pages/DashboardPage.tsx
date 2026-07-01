@@ -66,10 +66,14 @@ export function DashboardPage() {
       const response = await api.patch('/users/preferences', data);
       return response.data;
     },
-    onSuccess: () => {
+    onSuccess: (updatedUser) => {
       queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
       setIsEditing(false);
-      toast.success('Preferences updated successfully!');
+      if (!updatedUser.telegramConnected && user?.telegramConnected) {
+        toast.success('Alert preferences cleared. Telegram bot disconnected automatically.');
+      } else {
+        toast.success('Preferences updated successfully!');
+      }
     },
     onError: (err: any) => {
       toast.error(err.response?.data?.message || 'Failed to update preferences. Please try again.');

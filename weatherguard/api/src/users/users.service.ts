@@ -97,9 +97,20 @@ export class UsersService {
   }
 
   async updatePreferences(id: string, updatePreferencesDto: UpdatePreferencesDto): Promise<User> {
+    const updateQuery: any = { $set: { ...updatePreferencesDto } };
+    
+    // If user clears weather preferences or removes city, automatically disconnect Telegram
+    if (
+      (updatePreferencesDto.weatherPreferences !== undefined && updatePreferencesDto.weatherPreferences.length === 0) ||
+      (updatePreferencesDto.city !== undefined && updatePreferencesDto.city.trim() === '')
+    ) {
+      updateQuery.$set.telegramConnected = false;
+      updateQuery.$unset = { telegramChatId: "", telegramConnectedAt: "", telegramConnectionToken: "", telegramTokenExpires: "" };
+    }
+
     const updatedUser = await this.userModel.findByIdAndUpdate(
       id,
-      { $set: updatePreferencesDto },
+      updateQuery,
       { new: true }
     ).exec();
     
