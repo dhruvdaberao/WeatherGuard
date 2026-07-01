@@ -75,10 +75,11 @@ PICT Pune
 
 ### Weather Features
 - **OpenWeather Integration**: High-precision meteorological data retrieval powered by the OpenWeatherMap API.
-- **Automated Weather Monitoring**: Hourly scheduled background execution checking weather states across all configured user cities.
-- **Telegram Notifications**: Markdown-formatted, rich-text alert messages delivered instantly to users' Telegram devices.
-- **Manual Test Alerts**: Interactive UI triggers allowing users and administrators to test end-to-end notification delivery on demand.
-- **Anti-Spam Protection**: Advanced state-tracking algorithm that prevents duplicate or redundant notifications for persistent weather conditions within a 24-hour window.
+- **Continuous 6-Times-Daily Weather Monitoring**: Automated cloud cron engine checking weather states across all configured user cities and delivering regular updates on a 4-hour cycle (6 times daily).
+- **Telegram Notifications**: Rich markdown-formatted alert messages delivered instantly to users' Telegram devices.
+- **Realtime Manual Test Alerts**: Interactive UI triggers allowing users to fetch live, real-time meteorological conditions for their city and send instant verification alerts on demand.
+- **Smart Anti-Spam Protection**: Advanced state-tracking algorithm that limits routine alerts to every ~4 hours while immediately overriding cooldowns if sudden, brand-new severe weather conditions develop.
+- **Automated Lifecycle Cleanups**: Automatic decoupling of Telegram bot connections if a user removes their primary city or clears their alert condition preferences.
 
 ---
 
