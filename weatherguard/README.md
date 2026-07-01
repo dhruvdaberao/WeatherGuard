@@ -78,6 +78,7 @@ PICT Pune
 - **Continuous 6-Times-Daily Weather Monitoring**: Automated cloud cron engine checking weather states across all configured user cities and delivering regular updates on a 4-hour cycle (6 times daily).
 - **Telegram Notifications**: Rich markdown-formatted alert messages delivered instantly to users' Telegram devices.
 - **Realtime Manual Test Alerts**: Interactive UI triggers allowing users to fetch live, real-time meteorological conditions for their city and send instant verification alerts on demand.
+- **Interactive On-Demand Bot Chat**: Connected users can chat directly with the Telegram bot at any time (e.g., typing `hi`, `/weather`, or `status`) to receive an immediate, real-time live telemetry report without opening the web dashboard.
 - **Smart Anti-Spam Protection**: Advanced state-tracking algorithm that limits routine alerts to every ~4 hours while immediately overriding cooldowns if sudden, brand-new severe weather conditions develop.
 - **Automated Lifecycle Cleanups**: Automatic decoupling of Telegram bot connections if a user removes their primary city or clears their alert condition preferences.
 

@@ -89,7 +89,7 @@ export class WeatherService {
     return matched;
   }
 
-  generateAlertMessage(city: string, matchedAlerts: WeatherPreference[], weatherData: any, alertType: 'SCHEDULED' | 'URGENT' | 'TEST' = 'SCHEDULED'): string {
+  generateAlertMessage(city: string, matchedAlerts: WeatherPreference[], weatherData: any, alertType: 'SCHEDULED' | 'URGENT' | 'TEST' | 'ON_DEMAND' = 'SCHEDULED'): string {
     const temp = Math.round(weatherData.main?.temp || 0);
     
     let msg = '';
@@ -99,6 +99,9 @@ export class WeatherService {
     } else if (alertType === 'TEST') {
       msg += `🧪 *WEATHERGUARD TELEMETRY VERIFICATION*\n`;
       msg += `📡 *Real-Time System Check*\n`;
+    } else if (alertType === 'ON_DEMAND') {
+      msg += `📡 *LIVE WEATHER DISPATCH*\n`;
+      msg += `🛰️ *On-Demand Current Status*\n`;
     } else {
       msg += `🌦️ *WeatherGuard Intelligence Report*\n`;
       msg += `🕒 *Scheduled 4-Hour Dispatch*\n`;

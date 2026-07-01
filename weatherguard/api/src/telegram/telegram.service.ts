@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 const TelegramBot = require('node-telegram-bot-api');
 const BotConstructor = TelegramBot.default || TelegramBot.TelegramBot || TelegramBot;
 import { User, UserDocument } from '../users/schemas/user.schema';
+import { WeatherService } from '../weather/weather.service';
 
 @Injectable()
 export class TelegramService implements OnModuleInit {
@@ -12,6 +13,7 @@ export class TelegramService implements OnModuleInit {
 
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    private weatherService: WeatherService,
   ) {
     const token = process.env.TELEGRAM_BOT_TOKEN;
     if (token) {
@@ -66,16 +68,44 @@ export class TelegramService implements OnModuleInit {
       });
 
       if (existingConnectedUser) {
-        await this.bot.sendMessage(
-          chatId,
-          `Welcome back, ${existingConnectedUser.name}! Your account is already connected and active.`
+        await this.sendMessage(
+          chatId.toString(),
+          `👋 *Welcome back, ${existingConnectedUser.name}!*\n\nYour account is already connected and active. Simply send any message (like \`hi\`, \`status\`, or \`weather\`) into this chat at any time to receive your instant live weather report!`
         );
       } else {
-        await this.bot.sendMessage(
-          chatId,
-          'Welcome to WeatherGuard! To connect your account:\n\n1️⃣ Go to your WeatherGuard Web Dashboard\n2️⃣ Click "Copy Code" under Step 1\n3️⃣ Paste the copied command (/start WG_XXXXXX) directly into this chat and hit Send!'
+        await this.sendMessage(
+          chatId.toString(),
+          '👋 *Welcome to WeatherGuard!*\n\nTo connect your Telegram account and receive interactive on-demand reports + automated alerts:\n\n1️⃣ Open your **WeatherGuard Web Dashboard**\n2️⃣ Click **Copy Code** under Step 1\n3️⃣ Paste the copied command (`/start WG_XXXXXX`) right here in this chat and hit Send!'
         );
       }
+      return;
+    }
+
+    // Handle interactive on-demand weather status requests ("hi", "status", "/weather", etc.)
+    const existingConnectedUser = await this.userModel.findOne({
+      telegramChatId: chatId.toString(),
+      telegramConnected: true,
+    });
+
+    if (existingConnectedUser) {
+      const city = existingConnectedUser.city || 'Pune';
+      this.logger.log(`On-demand weather request from ${existingConnectedUser.email} (${city})`);
+      const weatherData = await this.weatherService.fetchWeather(city);
+      if (weatherData) {
+        const matchedPrefs = this.weatherService.matchPreferences(weatherData, existingConnectedUser.weatherPreferences || []);
+        const message = this.weatherService.generateAlertMessage(city, matchedPrefs, weatherData, 'ON_DEMAND');
+        await this.sendMessage(chatId.toString(), message);
+      } else {
+        await this.sendMessage(
+          chatId.toString(),
+          `⚠️ *WeatherGuard Notice*\n\nCould not retrieve live telemetry for **${city}**. Please verify your configured city name in the web dashboard preferences.`
+        );
+      }
+    } else {
+      await this.sendMessage(
+        chatId.toString(),
+        '👋 *Welcome to WeatherGuard!*\n\nYour Telegram account is not linked yet. To connect:\n\n1️⃣ Open your **WeatherGuard Web Dashboard**\n2️⃣ Click **Copy Code** under Step 1\n3️⃣ Paste the copied command (`/start WG_XXXXXX`) in this chat!'
+      );
     }
   }
 
