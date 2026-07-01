@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { MapPin, Loader2, Check } from 'lucide-react';
+import { MapPin, Loader2, Check, X } from 'lucide-react';
 import { Input } from '../ui/Input';
 import { useDebounce } from '../../hooks/useDebounce';
 import { cn } from '../../utils/cn';
@@ -123,13 +123,27 @@ export function CitySelector({ value, onChange }: CitySelectorProps) {
           onFocus={() => {
             if (results.length > 0) setIsOpen(true);
           }}
-          className="pl-9"
+          className="pl-9 pr-9"
         />
-        {isLoading && (
+        {isLoading ? (
           <div className="absolute right-3 top-2.5">
             <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
           </div>
-        )}
+        ) : query ? (
+          <button
+            type="button"
+            onClick={() => {
+              setQuery('');
+              onChange('');
+              setResults([]);
+              setIsOpen(false);
+            }}
+            className="absolute right-2.5 top-2 text-muted-foreground hover:text-foreground transition-colors p-1 rounded-full hover:bg-muted"
+            title="Clear city"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        ) : null}
       </div>
 
       {isOpen && (
