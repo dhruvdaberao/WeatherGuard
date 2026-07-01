@@ -45,7 +45,8 @@ export class SchedulerService {
           : Infinity;
 
         if (hasNewAlerts || hoursSinceLastAlert >= 3.5) {
-          const message = this.weatherService.generateAlertMessage(user.city, matchedPrefs, weatherData);
+          const alertType = hasNewAlerts ? 'URGENT' : 'SCHEDULED';
+          const message = this.weatherService.generateAlertMessage(user.city, matchedPrefs, weatherData, alertType);
           await this.telegramService.sendMessage(user.telegramChatId, message);
           
           await this.usersService.updateAlertHistory(user._id.toString(), matchedPrefs);
@@ -71,10 +72,9 @@ export class SchedulerService {
     if (!weatherData) throw new Error('Failed to fetch weather data for your city');
 
     const matchedPrefs = this.weatherService.matchPreferences(weatherData, user.weatherPreferences || []);
-    const message = this.weatherService.generateAlertMessage(user.city, matchedPrefs, weatherData);
+    const message = this.weatherService.generateAlertMessage(user.city, matchedPrefs, weatherData, 'TEST');
     
-    // Add [TEST ALERT] prefix so user knows it was manual
-    await this.telegramService.sendMessage(user.telegramChatId, `🧪 [TEST ALERT]\n\n${message}`);
+    await this.telegramService.sendMessage(user.telegramChatId, message);
     return { success: true, message: 'Test alert sent successfully' };
   }
 

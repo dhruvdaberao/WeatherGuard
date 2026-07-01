@@ -89,54 +89,73 @@ export class WeatherService {
     return matched;
   }
 
-  generateAlertMessage(city: string, matchedAlerts: WeatherPreference[], weatherData: any): string {
-    const temp = Math.round(weatherData.main?.temp);
+  generateAlertMessage(city: string, matchedAlerts: WeatherPreference[], weatherData: any, alertType: 'SCHEDULED' | 'URGENT' | 'TEST' = 'SCHEDULED'): string {
+    const temp = Math.round(weatherData.main?.temp || 0);
     
-    let msg = `🌦 *WeatherGuard Alert*\n`;
-    msg += `📍 *${city}*\n\n`;
+    let msg = '';
+    if (alertType === 'URGENT') {
+      msg += `🚨 *URGENT WEATHER ADVISORY* 🚨\n`;
+      msg += `⚡ *Immediate Condition Update*\n`;
+    } else if (alertType === 'TEST') {
+      msg += `🧪 *WEATHERGUARD TELEMETRY VERIFICATION*\n`;
+      msg += `📡 *Real-Time System Check*\n`;
+    } else {
+      msg += `🌦️ *WeatherGuard Intelligence Report*\n`;
+      msg += `🕒 *Scheduled 4-Hour Dispatch*\n`;
+    }
+    
+    msg += `📍 *Location:* ${city}\n\n`;
 
-    // Map matched alerts to user-friendly descriptions
+    // Map matched alerts to professional, captivating descriptions
     const alertDescriptions = matchedAlerts.map(alert => {
       switch (alert) {
-        case WeatherPreference.RAIN: return '🌧 Rain expected today.';
-        case WeatherPreference.THUNDERSTORM: return '⚡ Thunderstorms in the area.';
-        case WeatherPreference.SNOW: return '❄️ Snow is expected.';
-        case WeatherPreference.FOG: return '🌫️ Foggy or hazy conditions.';
-        case WeatherPreference.HIGH_TEMPERATURE: return `🔥 High temperatures alert.`;
-        case WeatherPreference.LOW_TEMPERATURE: return `🥶 Freezing temperatures.`;
-        case WeatherPreference.HIGH_WIND: return `💨 High winds expected.`;
-        case WeatherPreference.HUMIDITY: return `💧 Very high humidity.`;
-        case WeatherPreference.SEVERE_WEATHER: return `⚠️ Severe weather alert!`;
-        case WeatherPreference.UV_INDEX: return `☀️ High UV Index warning (Clear bright sunlight).`;
+        case WeatherPreference.RAIN: return '🌧️ *Precipitation Advisory*: Showers or rain expected today. Keep umbrella ready.';
+        case WeatherPreference.THUNDERSTORM: return '⛈️ *Severe Storm Warning*: Thunderstorms and electrical activity detected.';
+        case WeatherPreference.SNOW: return '❄️ *Winter Weather Watch*: Freezing conditions and snowfall expected.';
+        case WeatherPreference.FOG: return '🌫️ *Low Visibility Notice*: Fog, mist, or dense atmospheric haze reported.';
+        case WeatherPreference.HIGH_TEMPERATURE: return `🔥 *Extreme Heat Alert*: Elevated temperatures recorded. Risk of heat stress.`;
+        case WeatherPreference.LOW_TEMPERATURE: return `🥶 *Freezing Advisory*: Sub-zero or freezing temperatures detected.`;
+        case WeatherPreference.HIGH_WIND: return `💨 *High Wind Warning*: Strong gusty winds exceeding 10 m/s recorded.`;
+        case WeatherPreference.HUMIDITY: return `💧 *High Humidity Notice*: Relative humidity exceeding 85%. Muggy conditions.`;
+        case WeatherPreference.SEVERE_WEATHER: return `🌪️ *Severe Hazard Warning*: Extreme atmospheric activity or severe squalls reported.`;
+        case WeatherPreference.UV_INDEX: return `☀️ *High UV Index Alert*: Intense solar radiation under bright clear skies.`;
         default: return '';
       }
     }).filter(desc => desc !== '');
 
     if (alertDescriptions.length > 0) {
-      msg += alertDescriptions.join('\n') + '\n\n';
+      msg += `⚠️ *Active Alert Summary:*\n` + alertDescriptions.join('\n\n') + '\n\n';
     } else {
-      msg += `Conditions matched your preferences.\n\n`;
+      msg += `✅ *Atmospheric Conditions:* All monitored indicators are stable.\n\n`;
     }
 
-    msg += `🌡 Temperature:\n${temp}°C\n\n`;
+    msg += `📊 *Live Telemetry Overview*\n`;
+    msg += `• 🌡️ *Temperature:* ${temp}°C\n`;
+    if (weatherData.main?.humidity !== undefined) msg += `• 💧 *Humidity:* ${weatherData.main.humidity}%\n`;
+    if (weatherData.wind?.speed !== undefined) msg += `• 💨 *Wind Speed:* ${weatherData.wind.speed} m/s\n`;
+    if (weatherData.weather?.[0]?.description) {
+      const desc = weatherData.weather[0].description.charAt(0).toUpperCase() + weatherData.weather[0].description.slice(1);
+      msg += `• ☁️ *Conditions:* ${desc}\n`;
+    }
+    msg += `\n`;
     
-    // Add dynamic advice
+    // Add actionable executive guidance
     let advice = '';
     if (matchedAlerts.includes(WeatherPreference.RAIN) || matchedAlerts.includes(WeatherPreference.THUNDERSTORM)) {
-      advice = `Stay hydrated and carry an umbrella.`;
+      advice = `Carry waterproof gear and avoid open electrical areas during thunderstorms.`;
     } else if (matchedAlerts.includes(WeatherPreference.HIGH_TEMPERATURE) || matchedAlerts.includes(WeatherPreference.UV_INDEX)) {
-      advice = `Apply sunscreen, wear sunglasses, and avoid prolonged sun exposure.`;
+      advice = `Apply SPF 30+ sunscreen, stay hydrated, and minimize direct midday sun exposure.`;
     } else if (matchedAlerts.includes(WeatherPreference.LOW_TEMPERATURE) || matchedAlerts.includes(WeatherPreference.SNOW)) {
-      advice = `Bundle up and stay warm.`;
+      advice = `Wear insulated thermal clothing and exercise extreme caution on icy pathways.`;
     } else if (matchedAlerts.includes(WeatherPreference.HIGH_WIND) || matchedAlerts.includes(WeatherPreference.SEVERE_WEATHER)) {
-      advice = `Stay safe and secure loose objects.`;
+      advice = `Secure loose outdoor structures and stay indoors until high wind warnings subside.`;
     }
     
     if (advice) {
-      msg += `${advice}\n\n`;
+      msg += `🛡️ *Actionable Guidance*\n👉 ${advice}\n\n`;
     }
 
-    msg += `— WeatherGuard`;
+    msg += `━━━━━━━━━━━━━━━━━━━━━\n🤖 *WeatherGuard Automated Dispatch*`;
     return msg;
   }
 }

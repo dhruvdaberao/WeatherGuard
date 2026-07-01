@@ -178,9 +178,9 @@ export class UsersService {
     }
 
     const matchedPrefs = this.weatherService.matchPreferences(weatherData, user.weatherPreferences || []);
-    const message = this.weatherService.generateAlertMessage(city, matchedPrefs, weatherData);
+    const message = this.weatherService.generateAlertMessage(city, matchedPrefs, weatherData, 'TEST');
     
-    await this.telegramService.sendMessage(user.telegramChatId, `🧪 [TEST ALERT]\n\n${message}`);
+    await this.telegramService.sendMessage(user.telegramChatId, message);
     return { success: true, message: `Test alert sent successfully for ${city}!` };
   }
 }
