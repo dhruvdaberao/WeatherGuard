@@ -53,9 +53,9 @@ export function WeatherPreferenceSelector({ selected, onChange }: WeatherPrefere
   ];
 
   return (
-    <div className="space-y-2">
-      <label className="text-sm font-medium leading-none">Alert Types</label>
-      <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-5">
+    <div className="space-y-2.5">
+      <label className="text-sm font-semibold leading-none text-foreground">Alert Types</label>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-2.5">
         {options.map(({ value, label, icon: Icon }) => {
           const isSelected = selected.includes(value);
           return (
@@ -63,12 +63,19 @@ export function WeatherPreferenceSelector({ selected, onChange }: WeatherPrefere
               key={value}
               onClick={() => togglePreference(value)}
               className={cn(
-                'flex flex-col items-center justify-center p-4 rounded-xl border cursor-pointer transition-all hover:bg-muted/50 text-center gap-2',
-                isSelected ? 'border-primary bg-primary/5 text-primary' : 'border-input bg-transparent text-muted-foreground'
+                'flex items-center justify-start sm:justify-center gap-2.5 px-3 py-2.5 rounded-xl border cursor-pointer transition-all select-none group shadow-2xs hover:shadow-sm active:scale-[0.98]',
+                isSelected 
+                  ? 'border-primary bg-primary/10 text-primary font-semibold shadow-xs ring-1 ring-primary/30' 
+                  : 'border-border/80 bg-card/60 hover:bg-muted/60 text-muted-foreground hover:text-foreground'
               )}
             >
-              <Icon className={cn('w-6 h-6', isSelected ? 'text-primary' : 'text-muted-foreground')} />
-              <span className="text-xs font-medium">{label}</span>
+              <div className={cn(
+                'p-1.5 rounded-lg transition-colors shrink-0',
+                isSelected ? 'bg-primary/20 text-primary' : 'bg-muted/70 text-muted-foreground group-hover:text-foreground'
+              )}>
+                <Icon className="w-4 h-4" />
+              </div>
+              <span className="text-xs font-medium tracking-tight truncate">{label}</span>
             </div>
           );
         })}
