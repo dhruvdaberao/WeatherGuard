@@ -9,8 +9,9 @@ export class SchedulerController {
   async runWeatherCron(@Req() req: any) {
     const authHeader = req.headers.authorization;
     const cronSecret = process.env.CRON_SECRET;
+    const isVercelCron = req.headers['x-vercel-cron'] === '1' || req.headers['user-agent']?.includes('vercel-cron');
     
-    if (authHeader !== `Bearer ${cronSecret}`) {
+    if (cronSecret && !isVercelCron && authHeader !== `Bearer ${cronSecret}`) {
       throw new UnauthorizedException('Invalid cron secret');
     }
 
