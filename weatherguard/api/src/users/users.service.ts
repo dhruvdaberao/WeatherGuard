@@ -108,6 +108,12 @@ export class UsersService {
   }
 
   async generateTelegramToken(id: string): Promise<{ token: string, botUsername: string }> {
+    const user = await this.userModel.findById(id).exec();
+    if (!user) throw new NotFoundException('User not found');
+    if (!user.weatherPreferences || user.weatherPreferences.length === 0) {
+      throw new BadRequestException('Please select and save at least one weather alert preference before connecting Telegram.');
+    }
+
     const token = 'WG_' + Math.random().toString(36).substring(2, 8).toUpperCase();
     const expires = new Date();
     expires.setHours(expires.getHours() + 24);

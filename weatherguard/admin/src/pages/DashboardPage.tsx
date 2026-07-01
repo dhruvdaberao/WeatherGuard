@@ -8,7 +8,7 @@ import { Status } from '../types/auth';
 import { CitySelector } from '../components/preferences/CitySelector';
 import { WeatherPreferenceSelector, WeatherPreference } from '../components/preferences/WeatherPreferenceSelector';
 import { api } from '../services/api';
-import { MapPin, Save, Edit2, X, Lock, CheckCircle2, XCircle } from 'lucide-react';
+import { MapPin, Save, Edit2, X, Lock, CheckCircle2, XCircle, AlertTriangle } from 'lucide-react';
 import { TelegramLogo } from '../components/shared/TelegramLogo';
 import { LoadingState } from '../components/shared/LoadingState';
 import toast from 'react-hot-toast';
@@ -22,6 +22,7 @@ export function DashboardPage() {
   
   const [isEditing, setIsEditing] = useState(false);
   const [isTelegramModalOpen, setIsTelegramModalOpen] = useState(false);
+  const [showMissingPreferencesModal, setShowMissingPreferencesModal] = useState(false);
   const [city, setCity] = useState(user?.city || '');
 
   const testAlertMutation = useMutation({
@@ -258,7 +259,13 @@ export function DashboardPage() {
                   className="w-full h-12 gap-2 text-white shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5" 
                   style={{ backgroundColor: '#229ED9' }}
                   disabled={isLocked}
-                  onClick={() => setIsTelegramModalOpen(true)}
+                  onClick={() => {
+                    if (!user?.weatherPreferences || user.weatherPreferences.length === 0) {
+                      setShowMissingPreferencesModal(true);
+                      return;
+                    }
+                    setIsTelegramModalOpen(true);
+                  }}
                 >
                   <TelegramLogo className="w-5 h-5 shrink-0" /> Connect Telegram
                 </Button>
@@ -282,6 +289,46 @@ export function DashboardPage() {
                 isOpen={isTelegramModalOpen} 
                 onClose={() => setIsTelegramModalOpen(false)} 
               />
+            )}
+
+            {showMissingPreferencesModal && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm animate-in fade-in duration-200">
+                <div className="relative w-full max-w-md p-6 bg-card rounded-2xl shadow-2xl border border-amber-500/40 text-left space-y-5 animate-in zoom-in-95 duration-200">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 rounded-2xl bg-amber-500/15 text-amber-500 shrink-0 shadow-sm border border-amber-500/20">
+                      <AlertTriangle className="w-6 h-6" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <h3 className="font-bold text-lg text-foreground tracking-tight">
+                        Alert Preferences Required
+                      </h3>
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                        You haven't selected any weather alert conditions yet! Without configuring preferences (like Rain, Thunderstorm, or Extreme Heat), the Telegram bot won't know when to notify you.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-end gap-3 pt-3 border-t border-border/60">
+                    <Button
+                      variant="ghost"
+                      onClick={() => setShowMissingPreferencesModal(false)}
+                      className="px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl hover:bg-muted"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setShowMissingPreferencesModal(false);
+                        setIsEditing(true);
+                        window.scrollTo({ top: 180, behavior: 'smooth' });
+                      }}
+                      className="px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-amber-500 hover:bg-amber-600 text-white shadow-md hover:shadow-lg transition-all"
+                    >
+                      Configure Preferences Now
+                    </Button>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>
