@@ -75,19 +75,22 @@ PICT Pune
 - **User Management Dashboard**: Comprehensive tabular overview displaying user roles, connection states, registration timestamps, and administrative actions.
 
 ### User Features
-- **Save Alert Preferences**: Intuitive interface for selecting specific atmospheric trigger conditions.
+- **Save Alert Preferences**: Intuitive interface for selecting specific atmospheric trigger conditions across 10 distinct categories.
+- **Custom Automated Alert Schedules**: Users can dynamically toggle automated routine dispatches on or off while preserving their Telegram connection for interactive on-demand chat.
+- **Granular Daily Frequency Controls**: Custom scheduling slider allowing users to choose their exact dispatch frequency (`1x`, `2x`, `3x`, `4x`, or `6x` daily).
 - **Profile Management**: Personalized user dashboard displaying account metadata, identity provider details, and system status.
 - **City Selection**: Geographic targeting enabling users to specify exact municipal locations for weather tracking.
-- **Telegram Integration**: Guided one-click verification flow connecting user web profiles with the WeatherGuard Telegram Bot.
-- **Settings Page**: Full control over alert subscriptions, city updates, and integration decoupling.
+- **Telegram Integration**: Guided verification flow connecting user web profiles with the WeatherGuard Telegram Bot.
+- **Smart Reconnection Recognition**: Intelligent session persistence that identifies returning users and issues distinct re-linking confirmation dispatches.
 - **Approval Status Tracking**: Transparent UI banners informing users of their real-time application state (`PENDING`, `APPROVED`, or `REJECTED`).
 
 ### Weather Features
 - **OpenWeather Integration**: High-precision meteorological data retrieval powered by the OpenWeatherMap API.
-- **Automated Weather Monitoring**: Hourly scheduled background execution checking weather states across all configured user cities.
-- **Telegram Notifications**: Markdown-formatted, rich-text alert messages delivered instantly to users' Telegram devices.
+- **Interactive On-Demand Telemetry**: Users can send simple chat messages (`hi`, `status`, `/weather`) to the Telegram bot at any time to receive instantaneous, real-time atmospheric conditions and actionable health guidance.
+- **Automated Weather Monitoring**: Scheduled background execution checking weather states across all configured user cities based on their custom daily interval.
+- **Rich Executive Telegram Notifications**: High-contrast, beautifully structured markdown dispatches featuring dynamic category emojis and telemetry blocks.
 - **Manual Test Alerts**: Interactive UI triggers allowing users and administrators to test end-to-end notification delivery on demand.
-- **Anti-Spam Protection**: Advanced state-tracking algorithm that prevents duplicate or redundant notifications for persistent weather conditions within a 24-hour window.
+- **Anti-Spam & Urgent Override Engine**: Smart frequency-gating that suppresses repetitive routine dispatches while guaranteeing immediate delivery whenever new severe weather conditions erupt.
 
 ---
 
