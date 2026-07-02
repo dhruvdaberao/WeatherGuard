@@ -97,7 +97,7 @@ export function HireMePage() {
             <Sparkles className="w-3.5 h-3.5" /> Engineer Showcase
           </div>
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-[#229ED9] to-secondary bg-clip-text text-transparent">
-            Why Am I a Great Match For This Role & Company?
+            Why You Should Hire Me?
           </h1>
           <p className="text-xs sm:text-sm md:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed font-medium">
             I don't just complete assignments—I architect high-speed, secure, and visually immaculate SaaS applications. Here is my technical contribution to your team:
@@ -167,7 +167,7 @@ export function HireMePage() {
                 href="mailto:dhruvdaberao777@gmail.com?subject=Interview%20Invitation%20-%20AI47Labs"
                 className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 h-11 rounded-xl bg-gradient-to-r from-[#229ED9] to-[#1d8ac0] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all active:scale-95 whitespace-nowrap"
               >
-                <Mail className="w-4 h-4 shrink-0" /> Hire Dhruv Now
+                <Mail className="w-4 h-4 shrink-0" /> Hire Me Now
               </a>
               <a 
                 href="https://linkedin.com/in/dhruvdaberao"
