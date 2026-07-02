@@ -78,7 +78,7 @@ export class TelegramService implements OnModuleInit {
       if (existingConnectedUser) {
         await this.sendMessage(
           chatId.toString(),
-          `👋 *Welcome back, ${existingConnectedUser.name}!*\n\nYour account is already connected and active. Simply send any message (like \`hi\`, \`status\`, or \`weather\`) into this chat at any time to receive your instant live weather report!`
+          `👋 *Welcome back, ${existingConnectedUser.name}!*\n\nYour account is already connected and active. Simply send any message (like \`hi\`, \`status\`, or \`weather\`) into this chat at any time to receive your instant live weather report!\n\n💡 *Tip:* Send \`/help\` anytime for commands & options.`
         );
       } else {
         await this.sendMessage(

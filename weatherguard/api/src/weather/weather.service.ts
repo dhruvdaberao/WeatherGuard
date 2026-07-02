@@ -158,7 +158,7 @@ export class WeatherService {
       msg += `🛡️ *Actionable Guidance*\n👉 ${advice}\n\n`;
     }
 
-    msg += `━━━━━━━━━━━━━━━━━━━━━\n🤖 *WeatherGuard Automated Dispatch*`;
+    msg += `━━━━━━━━━━━━━━━━━━━━━\n🤖 *WeatherGuard Automated Dispatch*\n💡 *Tip:* Send \`/help\` anytime for commands & options.`;
     return msg;
   }
 }
