@@ -91,6 +91,7 @@ PICT Pune
   - **Serverless Webhook Trigger (`/api/cron/weather`)**: Dedicated public cron endpoint compatible with Vercel Cron and high-frequency cloud schedulers (such as `cron-job.org` running at 30-minute intervals) ensuring 100% reliable execution in stateless serverless environments.
   - **Internal Container Scheduler (`@Cron`)**: Built-in NestJS `@nestjs/schedule` engine that autonomously runs hourly interval checks whenever deployed in persistent container host environments (Docker, Render, AWS).
 - **Rich Executive Telegram Notifications**: High-contrast, beautifully structured markdown dispatches featuring dynamic category emojis and telemetry blocks.
+- **Automated Executive Onboarding Email Engine (Brevo v3 Integration)**: When an Administrator approves a pending registration, the backend instantly fires a stunning, responsive dark-themed HTML email dispatch loaded with Poppins typography, vector brand logo, and a step-by-step Telegram activation timeline with direct login routing.
 - **Native Telegram Bot Command Menu**: Built-in slash command directory registered directly with Telegram Bot API:
   - `/start WG_XXXXXX` — Connect your WeatherGuard account
   - `/status` — View connection status & current conditions

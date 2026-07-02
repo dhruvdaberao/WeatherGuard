@@ -235,18 +235,32 @@ export class EmailService {
             </svg>
             Activation Protocol
           </div>
-          <div class="step-item">
-            <span class="step-num">1</span>
-            <p class="step-desc">Log into the web dashboard using the secure portal link below.</p>
-          </div>
-          <div class="step-item">
-            <span class="step-num">2</span>
-            <p class="step-desc">Navigate to <strong>Preferences</strong> and initiate the <strong>Connect Telegram</strong> protocol.</p>
-          </div>
-          <div class="step-item">
-            <span class="step-num">3</span>
-            <p class="step-desc">Select your desired daily briefing frequency (1x to 6x daily intervals).</p>
-          </div>
+          <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
+            <tr>
+              <td style="width: 32px; vertical-align: top; padding-bottom: 14px;">
+                <div style="width: 24px; height: 24px; line-height: 24px; border-radius: 50%; background-color: #1e293b; border: 1px solid #334155; color: #38bdf8; font-size: 12px; font-weight: 700; text-align: center; display: block;">1</div>
+              </td>
+              <td style="vertical-align: top; padding-bottom: 14px; color: #cbd5e1; font-size: 13px; line-height: 1.5;">
+                Log into the web dashboard using the portal button below.
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 32px; vertical-align: top; padding-bottom: 14px;">
+                <div style="width: 24px; height: 24px; line-height: 24px; border-radius: 50%; background-color: #1e293b; border: 1px solid #334155; color: #38bdf8; font-size: 12px; font-weight: 700; text-align: center; display: block;">2</div>
+              </td>
+              <td style="vertical-align: top; padding-bottom: 14px; color: #cbd5e1; font-size: 13px; line-height: 1.5;">
+                Navigate to <strong>Preferences</strong> and click <strong>Connect Telegram</strong> to generate your verification link.
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 32px; vertical-align: top;">
+                <div style="width: 24px; height: 24px; line-height: 24px; border-radius: 50%; background-color: #1e293b; border: 1px solid #334155; color: #38bdf8; font-size: 12px; font-weight: 700; text-align: center; display: block;">3</div>
+              </td>
+              <td style="vertical-align: top; color: #cbd5e1; font-size: 13px; line-height: 1.5;">
+                Copy your unique connection command (e.g., <code style="background:#1e293b; color:#38bdf8; padding:2px 6px; border-radius:4px; font-size:11.5px;">/start WG_XXXXXX</code>) and paste it into the Telegram bot to activate your automated 1x–6x daily dispatches!
+              </td>
+            </tr>
+          </table>
         </div>
 
         <div class="btn-wrap">
