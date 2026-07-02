@@ -62,6 +62,9 @@ export class User {
   @Prop()
   lastAlertSentAt: Date;
 
+  @Prop()
+  lastScheduledAlertSentAt: Date;
+
   @Prop({ type: [String], default: [] })
   lastAlertTypes: string[];
 }

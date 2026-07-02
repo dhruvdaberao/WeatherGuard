@@ -104,7 +104,7 @@ export class WeatherService {
       msg += `🛰️ *On-Demand Current Status*\n`;
     } else {
       msg += `🌦️ *WeatherGuard Intelligence Report*\n`;
-      msg += `🕒 *Scheduled 4-Hour Dispatch*\n`;
+      msg += `🕒 *Scheduled Routine Dispatch*\n`;
     }
     
     msg += `📍 *Location:* ${city}\n\n`;

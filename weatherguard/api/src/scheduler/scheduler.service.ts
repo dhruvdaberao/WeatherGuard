@@ -45,19 +45,25 @@ export class SchedulerService {
 
         const prevTypes = user.lastAlertTypes || [];
         const hasNewAlerts = matchedPrefs.length > 0 && matchedPrefs.some((p: string) => !prevTypes.includes(p));
-        const hoursSinceLastAlert = user.lastAlertSentAt 
-          ? (new Date().getTime() - new Date(user.lastAlertSentAt).getTime()) / (1000 * 60 * 60)
+        
+        // Measure time strictly from last routine SCHEDULED dispatch so test/urgent alerts never shift fixed intervals
+        const referenceScheduledDate = user.lastScheduledAlertSentAt || user.lastAlertSentAt;
+        const hoursSinceLastScheduledAlert = referenceScheduledDate 
+          ? (new Date().getTime() - new Date(referenceScheduledDate).getTime()) / (1000 * 60 * 60)
           : Infinity;
 
-        // Dispatch notification if:
-        // 1. There is an urgent new severe weather condition (hasNewAlerts)
-        // 2. It is time for their routine scheduled report based on alertsPerDay (hoursSinceLastAlert >= cooldownHours)
-        if (hasNewAlerts || hoursSinceLastAlert >= cooldownHours) {
+        const isScheduledTime = hoursSinceLastScheduledAlert >= cooldownHours;
+
+        if (hasNewAlerts || isScheduledTime) {
           const alertType = hasNewAlerts ? 'URGENT' : 'SCHEDULED';
           const message = this.weatherService.generateAlertMessage(user.city, matchedPrefs, weatherData, alertType);
           await this.telegramService.sendMessage(user.telegramChatId, message);
           
-          await this.usersService.updateAlertHistory(user._id.toString(), matchedPrefs);
+          if (alertType === 'SCHEDULED') {
+            await this.usersService.updateScheduledAlertHistory(user._id.toString(), matchedPrefs);
+          } else {
+            await this.usersService.updateAlertHistory(user._id.toString(), matchedPrefs);
+          }
           sentCount++;
           this.logger.log(`Sent ${alertType} weather dispatch to user ${user.email} (${user.city})`);
         }

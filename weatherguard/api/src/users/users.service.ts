@@ -164,6 +164,16 @@ export class UsersService {
     }).exec();
   }
 
+  async updateScheduledAlertHistory(id: string, alertTypes: string[]): Promise<void> {
+    await this.userModel.findByIdAndUpdate(id, {
+      $set: {
+        lastScheduledAlertSentAt: new Date(),
+        lastAlertSentAt: new Date(),
+        lastAlertTypes: alertTypes
+      }
+    }).exec();
+  }
+
   async sendManualTestAlert(id: string): Promise<{ success: boolean; message: string }> {
     const user = await this.userModel.findById(id).exec();
     if (!user) throw new BadRequestException('User account not found');
