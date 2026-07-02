@@ -87,7 +87,9 @@ PICT Pune
 ### Weather Features
 - **OpenWeather Integration**: High-precision meteorological data retrieval powered by the OpenWeatherMap API.
 - **Interactive On-Demand Telemetry**: Users can send simple chat messages (`hi`, `status`, `/weather`) to the Telegram bot at any time to receive instantaneous, real-time atmospheric conditions and actionable health guidance.
-- **Automated Weather Monitoring**: Scheduled background execution checking weather states across all configured user cities based on their custom daily interval.
+- **Automated Weather Monitoring (Hybrid Scheduling Architecture)**: Multi-tier background execution engine checking weather states across all configured user cities based on their custom daily intervals:
+  - **Serverless Webhook Trigger (`/api/cron/weather`)**: Dedicated public cron endpoint compatible with Vercel Cron and cloud schedulers (like `cron-job.org`) ensuring 100% reliable execution in stateless serverless environments.
+  - **Internal Container Scheduler (`@Cron`)**: Built-in NestJS `@nestjs/schedule` engine that autonomously runs hourly interval checks whenever deployed in persistent container host environments (Docker, Render, AWS).
 - **Rich Executive Telegram Notifications**: High-contrast, beautifully structured markdown dispatches featuring dynamic category emojis and telemetry blocks.
 - **Native Telegram Bot Command Menu**: Built-in slash command directory registered directly with Telegram Bot API:
   - `/start WG_XXXXXX` — Connect your WeatherGuard account
