@@ -97,7 +97,12 @@ PICT Pune
   - `/test` — Receive a test weather notification
   - `/help` — Show available commands & platform directory
   - `/disconnect` — Safely unlink your Telegram account directly via chat
-- **Isolated Compulsory Scheduling & Urgent Override Engine**: Advanced dual-timestamp architecture (`lastScheduledAlertSentAt`) that insulates routine fixed dispatches (`1x` to `6x` daily) from manual admin tests and urgent storm warnings, guaranteeing exact anchor intervals without time drift.
+- **Isolated Compulsory Scheduling & Urgent Override Engine**: Advanced dual-timestamp architecture (`lastScheduledAlertSentAt`) that insulates routine fixed dispatches from manual admin tests and urgent storm warnings, guaranteeing exact anchor intervals without time drift:
+  - **1x Daily**: Every 24 hours (Morning Briefing)
+  - **2x Daily**: Every 12 hours (Morning & Evening)
+  - **3x Daily**: Every 8 hours (Morning, Afternoon, Midnight)
+  - **4x Daily**: Every 6 hours (6 AM, 12 PM, 6 PM, 12 AM)
+  - **6x Daily (Default)**: Every 4 hours across the 24-hour cycle
 
 ---
 
