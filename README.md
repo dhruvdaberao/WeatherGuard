@@ -97,7 +97,7 @@ PICT Pune
   - `/test` — Receive a test weather notification
   - `/help` — Show available commands & platform directory
   - `/disconnect` — Safely unlink your Telegram account directly via chat
-- **Anti-Spam & Urgent Override Engine**: Smart frequency-gating that suppresses repetitive routine dispatches while guaranteeing immediate delivery whenever new severe weather conditions erupt.
+- **Isolated Compulsory Scheduling & Urgent Override Engine**: Advanced dual-timestamp architecture (`lastScheduledAlertSentAt`) that insulates routine fixed dispatches (`1x` to `6x` daily) from manual admin tests and urgent storm warnings, guaranteeing exact anchor intervals without time drift.
 
 ---
 
