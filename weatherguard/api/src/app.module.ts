@@ -9,6 +9,7 @@ import { AdminModule } from './admin/admin.module';
 import { TelegramModule } from './telegram/telegram.module';
 import { WeatherModule } from './weather/weather.module';
 import { SchedulerModule } from './scheduler/scheduler.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { SchedulerModule } from './scheduler/scheduler.module';
     TelegramModule,
     WeatherModule,
     SchedulerModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

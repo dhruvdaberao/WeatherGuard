@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { TelegramService } from '../telegram/telegram.service';
+import { EmailService } from '../email/email.service';
 import { Status } from '../users/enums/status.enum';
 
 @Injectable()
@@ -9,7 +10,8 @@ export class AdminService {
 
   constructor(
     private usersService: UsersService,
-    private telegramService: TelegramService
+    private telegramService: TelegramService,
+    private emailService: EmailService
   ) {}
 
   async getDashboardStats() {
@@ -33,7 +35,13 @@ export class AdminService {
   }
 
   async approveUser(id: string) {
-    return this.usersService.updateStatus(id, Status.APPROVED);
+    const updatedUser = await this.usersService.updateStatus(id, Status.APPROVED);
+    if (updatedUser && updatedUser.email) {
+      this.emailService.sendApprovalEmail(updatedUser.email, updatedUser.name).catch((err) => {
+        this.logger.error(`Failed background approval email dispatch for ${updatedUser.email}: ${err.message}`);
+      });
+    }
+    return updatedUser;
   }
 
   async rejectUser(id: string) {
